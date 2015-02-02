@@ -83,6 +83,26 @@ public class BlockGrid extends JPanel {
 		return true;
 	}
 	
+	public void removeLine(int l) {
+		//TODO: remove the blocks in a line and drop all above values by one row
+	}
+	
+	public int[] getFullLines() {
+		LinkedList<Integer> list = new LinkedList<Integer>();
+		for (int i = this.height - 1; i >= 0; i++) {
+			if (this.lineIsFull(i))
+				list.add(i);
+		}
+		return list.toArray(new int[list.size()]);
+	}
+	
+	public boolean lineIsFull(int l) {
+		for (int i = 0; i < this.width; i++)
+			if (this.blocks[l][i] == null)
+				return false;
+		return true;
+	}
+	
 	private void update() {
 		this.revalidate();
 		this.repaint();
