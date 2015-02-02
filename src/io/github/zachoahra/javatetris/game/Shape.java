@@ -34,8 +34,8 @@ public class Shape {
 		this(null, null, s.xCenter, s.yCenter, s.rotatability);
 		this.rotation = s.rotation;
 		this.falling = s.falling;
-		this.blocks = s.blocks;
 		this.masterPanel = s.masterPanel;
+		this.copyBlocks(s.blocks);
 		this.setGridPosition(3, -1);
 	}
 
@@ -56,8 +56,8 @@ public class Shape {
 	private void updateBlockGridPositions() {
 		for (int i = 0; i < 4; i++)
 			for (int j = 0; j < 4; j++)
-				if (blocks[i][j] != null)
-					blocks[i][j].setGridPos(j + this.xPos, i + this.yPos);
+				if (this.blocks[i][j] != null)
+					this.blocks[i][j].setGridPos(j + this.xPos, i + this.yPos);
 	}
 
 	public Block[][] getBlockGrid() {
@@ -155,14 +155,27 @@ public class Shape {
 	}
 
 	private void initBlocks(BlockTexture texture, boolean[][] placements) {
-		this.blocks = new Block[4][4];
-		for (int i = 0; i < 4; i++)
-			for (int j = 0; j < 4; j++)
-				this.blocks[i][j] = null;
+		this.createBlankBlockMatrix();
 		for (int i = 0; i < placements.length; i++)
 			for (int j = 0; j < placements[i].length; j++)
 				if (placements[i][j])
 					this.blocks[i][j] = new Block(texture);
+	}
+	
+	private void copyBlocks(Block[][] bMat) {
+		this.createBlankBlockMatrix();
+		for (int i = 0; i < 4; i++)
+			for (int j = 0; j < 4; j++)
+				if (bMat[i][j] != null)
+					this.blocks[i][j] = new Block(bMat[i][j]);
+	}
+	
+	private void createBlankBlockMatrix() {
+		this.blocks = new Block[4][4];
+		for (int i = 0; i < 4; i++)
+			for (int j = 0; j < 4; j++)
+				this.blocks[i][j] = null;
+		
 	}
 
 	public String toString() {
