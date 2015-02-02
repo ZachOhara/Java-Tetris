@@ -1,5 +1,7 @@
 package io.github.zachoahra.javatetris.game;
 
+import java.util.LinkedList;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -87,18 +89,18 @@ public class BlockGrid extends JPanel {
 		//TODO: remove the blocks in a line and drop all above values by one row
 	}
 	
-	public int[] getFullLines() {
+	public Integer[] getFullLines() {
 		LinkedList<Integer> list = new LinkedList<Integer>();
 		for (int i = this.height - 1; i >= 0; i++) {
 			if (this.lineIsFull(i))
 				list.add(i);
 		}
-		return list.toArray(new int[list.size()]);
+		return list.toArray(new Integer[list.size()]);
 	}
 	
 	public boolean lineIsFull(int l) {
 		for (int i = 0; i < this.width; i++)
-			if (this.blocks[l][i] == null)
+			if (this.blockgrid[l][i] == null)
 				return false;
 		return true;
 	}
