@@ -15,7 +15,7 @@ public class Block extends JPanel {
 	private BlockTexture texture;
 
 	private static int lengthPixels = 50;
-	private static final double correctionFactor = 16.0/14.0;
+	private static final double correctionFactor = 15.5/14.0;
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -29,8 +29,19 @@ public class Block extends JPanel {
 		this.add(this.texture.getLabel());
 	}
 	
+	public Block(Block other) {
+		this(other.texture);
+		this.posX = other.posX;
+		this.posY = other.posY;
+		this.isAnchored = other.isAnchored;
+	}
+	
 	public static int getLength() {
 		return lengthPixels;
+	}
+	
+	public static double getCorrection() {
+		return correctionFactor;
 	}
 	
 	public static void setLength(int length) {
@@ -40,6 +51,7 @@ public class Block extends JPanel {
 	public void setGridPos(int x, int y) {
 		this.posX = x;
 		this.posY = y;
+		this.setLocation(x * lengthPixels, y * lengthPixels);
 	}
 	
 	public int getGridX() {
