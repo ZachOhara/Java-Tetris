@@ -14,7 +14,6 @@ import javax.swing.JLabel;
 
 public enum BlockTexture {
 
-	NULL (),
 	BLUE ("blue.png"),
 	GREEN ("green.png"),
 	ORANGE ("orange.png"),
@@ -35,10 +34,6 @@ public enum BlockTexture {
 			e.printStackTrace();
 		}
 		this.texture = scale(temp, Block.getLength());
-	}
-
-	private BlockTexture() {
-		this.texture = null;
 	}
 
 	public ImageIcon getImage() {
