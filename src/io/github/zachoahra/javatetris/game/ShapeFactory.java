@@ -76,7 +76,7 @@ public abstract class ShapeFactory {
 	}
 
 	public static Shape makeO() {
-		return new Shape(O);
+		return new Shape(O).descend(1);
 	}
 
 	public static Shape makeT() {
