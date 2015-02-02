@@ -1,10 +1,14 @@
 package io.github.zachoahra.javatetris.window;
 
+import io.github.zachoahra.javatetris.management.GameManager;
+
 import java.awt.Dimension;
 
 import javax.swing.JFrame;
 
 public class GameWindow extends JFrame {
+	
+	private GameManager game;
 	
 	private static final String windowTitle = "Tetris by Zach Ohara";
 	
@@ -17,6 +21,8 @@ public class GameWindow extends JFrame {
 		this.setLocationRelativeTo(null);
 		this.setResizable(false);
 		this.setLayout(null);
+		
+		this.game = new GameManager(this);
 	}
 
 	public static void main(String[] args) {
@@ -30,7 +36,8 @@ public class GameWindow extends JFrame {
 	}
 	
 	public void doInput(int code) {
-		//TODO: receive inputs and act accordingly
+		this.game.doInput(code);
+		// pass the input along to the game manager
 	}
 
 }
