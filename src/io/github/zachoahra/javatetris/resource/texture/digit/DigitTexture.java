@@ -44,7 +44,9 @@ public enum DigitTexture {
 	}
 
 	public JLabel getLabel() {
-		return new JLabel(this.getImage());
+		JLabel jl = new JLabel(this.getImage());
+		jl.setSize(NumberImage.getDigitWidthPix(), NumberImage.getDigitHeightPix());
+		return jl;
 	}
 	
 	public static DigitTexture get(int i) {
