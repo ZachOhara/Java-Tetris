@@ -2,6 +2,7 @@ package io.github.zachoahra.javatetris.game;
 
 import io.github.zachoahra.javatetris.resource.texture.block.BlockTexture;
 
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 public class Shape {
@@ -23,10 +24,10 @@ public class Shape {
 		this.xCenter = xc;
 		this.yCenter = yc;
 		this.masterPanel = null;
-		if (placements != null)
+		if (placements != null) {
 			this.initBlocks(texture, placements);
-		this.setGridPosition(0, 3);
-		this.updateBlockGridPositions();
+			this.setGridPosition(3, -1);
+		}
 	}
 
 	public Shape(Shape s) {
@@ -35,13 +36,15 @@ public class Shape {
 		this.falling = s.falling;
 		this.blocks = s.blocks;
 		this.masterPanel = s.masterPanel;
+		this.setGridPosition(3, -1);
 	}
 
 	public void setPanel(JPanel panel) {
 		this.masterPanel = panel;
 		for (Block[] bArr : blocks)
 			for (Block b : bArr)
-				panel.add(b);
+				if (b != null)
+					panel.add(b);
 	}
 	
 	public void setGridPosition(int x, int y) {
@@ -53,7 +56,8 @@ public class Shape {
 	private void updateBlockGridPositions() {
 		for (int i = 0; i < 4; i++)
 			for (int j = 0; j < 4; j++)
-				blocks[i][j].setGridPos(j + this.xPos, i + this.yPos);
+				if (blocks[i][j] != null)
+					blocks[i][j].setGridPos(j + this.xPos, i + this.yPos);
 	}
 
 	public Block[][] getBlockGrid() {
@@ -88,6 +92,42 @@ public class Shape {
 				this.rotateBlockArrayCW();
 		this.rotation = newR;
 		this.updateBlockGridPositions();
+	}
+	
+	public Shape descend(int d) {
+		this.applyTranslation(0, d);
+		return this;
+	}
+	
+	public void shiftLaterally(int d) {
+		this.applyTranslation(d, 0);
+	}
+	
+	private void applyTranslation(int dx, int dy) {
+		for (Block[] bArr : this.blocks)
+			for (Block b : bArr)
+				if (b != null) {
+					for (int i = 0; i < dy; i++)
+						b.descend();
+					b.shift(dx);
+				}
+		this.xPos += dx;
+		this.yPos += dy;
+	}
+	
+	public int getXPos() {
+		return this.xPos;
+	}
+	
+	public int getYPos() {
+		return this.yPos;
+	}
+	
+	public void anchor() {
+		for (Block[] bArr : this.blocks)
+			for (Block b : bArr)
+				if (b != null)
+					b.anchor();
 	}
 
 	private void rotateBlockArrayCCW() {
@@ -139,6 +179,30 @@ public class Shape {
 		return result;
 	}	
 	
+	public static void main(String[] args) throws InterruptedException {
+		JFrame f = new JFrame();
+		f.setSize(800, 400);
+		f.setLayout(null);
+		f.setLocationRelativeTo(null);
+		JPanel p = new JPanel();
+		p.setLayout(null);
+		p.setSize(800,400);
+		p.setLocation(0,0);
+		f.add(p);
+		Shape s = ShapeFactory.makeRandomShape();
+		s.setPanel(p);
+		p.repaint();
+		f.repaint();
+		f.setVisible(true);
+		for (int i = 0; i < 4; i++) {
+			Thread.sleep(1000);
+			s.descend(1);
+			p.repaint();
+			f.repaint();
+		}
+	}
+	
+	/*
 	public static void main(String[] args) {
 		Shape s = null;
 		for (int i = 0; i <= 6; i++) {
@@ -155,6 +219,7 @@ public class Shape {
 			}
 		}
 	}
+	*/
 	
 	/*
 	public static void main(String[] args) {
