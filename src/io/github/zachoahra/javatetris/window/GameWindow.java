@@ -1,7 +1,6 @@
 package io.github.zachoahra.javatetris.window;
 
 import java.awt.Dimension;
-import java.awt.Toolkit;
 
 import javax.swing.JFrame;
 
@@ -11,21 +10,27 @@ public class GameWindow extends JFrame {
 	
 	private static final long serialVersionUID = 1L;
 	
-	public GameWindow(Dimension size) {
-		super(windowTitle);
-		this.setSize(size);
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
-		
-		this.setVisible(true);
-	}
-	
 	public GameWindow() {
-		this(Toolkit.getDefaultToolkit().getScreenSize());
+		super(windowTitle);
+		this.setSize(getWindowSize());
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setLocationRelativeTo(null);
+		this.setResizable(false);
+		this.setLayout(null);
 	}
 
 	public static void main(String[] args) {
-		//GameWindow g = new GameWindow();
+		GameWindow g = new GameWindow();
+		g.setVisible(true);
+	}
+	
+	private static Dimension getWindowSize() {
+		return new Dimension(500,900);
+		//TODO: calculate size needs based on the size needs of the constituent window elements
+	}
+	
+	public void doInput(int code) {
+		//TODO: receive inputs and act accordingly
 	}
 
 }
