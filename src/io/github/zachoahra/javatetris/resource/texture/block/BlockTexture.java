@@ -42,6 +42,7 @@ public enum BlockTexture {
 
 	public JLabel getLabel() {
 		return new JLabel(this.getImage());
+		//TODO: set the size of the element here
 	}
 
 	public static BufferedImage scale(BufferedImage b, int newLen) {
