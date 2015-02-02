@@ -17,7 +17,7 @@ public class BlockGrid extends JPanel {
 		this.width = width;
 		this.height = height;
 		this.blockgrid = new Block[height][width];
-		this.setSize(width * Block.getLength(), (int)((height + Block.getCorrection()) * Block.getLength()));
+		this.setSize(width * Block.getLength(), height * Block.getLength());
 	}
 	
 	public void setShape(Shape s) {

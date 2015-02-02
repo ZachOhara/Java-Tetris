@@ -5,6 +5,7 @@ import java.awt.Point;
 import io.github.zachoahra.javatetris.resource.texture.block.BlockTexture;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class Block extends JPanel {
@@ -15,7 +16,6 @@ public class Block extends JPanel {
 	private BlockTexture texture;
 
 	private static int lengthPixels = 50;
-	private static final double correctionFactor = 15.5/14.0;
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -25,8 +25,12 @@ public class Block extends JPanel {
 		this.posY = 0;
 		this.isAnchored = false;
 		this.texture = texture;
-		this.setSize(lengthPixels, (int)(lengthPixels * correctionFactor));
-		this.add(this.texture.getLabel());
+		this.setSize(lengthPixels, lengthPixels);
+		JLabel textureLabel = this.texture.getLabel();
+		textureLabel.setLocation(0, 0);
+		textureLabel.setSize(lengthPixels, lengthPixels);
+		this.setLayout(null);
+		this.add(textureLabel);
 	}
 	
 	public Block(Block other) {
@@ -38,10 +42,6 @@ public class Block extends JPanel {
 	
 	public static int getLength() {
 		return lengthPixels;
-	}
-	
-	public static double getCorrection() {
-		return correctionFactor;
 	}
 	
 	public static void setLength(int length) {
