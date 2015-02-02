@@ -13,7 +13,7 @@ public class KeyboardInputListener implements KeyListener {
 	
 	private GameWindow masterWindow;
 	
-	private static final Integer[] defaultListenFor = {37, 38, 39, 40, 87, 65, 83, 68};
+	private static final Integer[] defaultListenFor = {37, 38, 39, 40, 65, 87, 68, 83};
 	private static final boolean listenToAll = false;
 	private static final boolean displayOutputs = true;
 	private List<Integer> listenFor;
