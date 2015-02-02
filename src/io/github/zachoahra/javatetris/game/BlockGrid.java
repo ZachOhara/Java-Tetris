@@ -32,6 +32,11 @@ public class BlockGrid extends JPanel {
 		this.update();
 	}
 	
+	public void shiftShape(int d) {
+		this.currentShape.shiftLaterally(d);
+		this.update();
+	}
+	
 	public void anchorShape() {
 		this.currentShape.anchor();
 		Block[][] grid = this.currentShape.getBlockGrid();
@@ -59,6 +64,22 @@ public class BlockGrid extends JPanel {
 					return false;
 			}
 		}
+		return true;
+	}
+	
+	public boolean canShapeShift(int d) {
+		Block[][] shapeGrid = this.currentShape.getBlockGrid();
+		int x = this.currentShape.getXPos();
+		int y = this.currentShape.getYPos();
+		x += d;
+		for (int i = 0; i < 4; i++)
+			for (int j = 0; j < 4; j++)
+				if (shapeGrid[i][j] != null) {
+					if (x + j < 0 || x + j >= this.width)
+						return false;
+					if (this.blockgrid[i+y][j+x] != null)
+						return false;
+				}
 		return true;
 	}
 	
@@ -100,11 +121,14 @@ public class BlockGrid extends JPanel {
 		
 		f.setVisible(true);
 		//System.exit(0);
+		int shift = 1;
 		while (true) {
 			//System.out.println("point A");
 			while (g.canShapeDescend()) {
 				Thread.sleep(300);
 				g.descendShape();
+				if (g.canShapeShift(shift))
+					g.shiftShape(shift);
 				f.revalidate();
 				f.repaint();			
 			}
@@ -112,6 +136,7 @@ public class BlockGrid extends JPanel {
 			System.out.println("Can't descend!");
 			//System.out.println(g);
 			g.setShape(ShapeFactory.makeRandomShape());
+			shift = -shift;
 		}
 		
 	}
