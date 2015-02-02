@@ -15,5 +15,10 @@ public class LevelManager {
 	public void levelUp() {
 		this.level++;
 	}
+	
+	public int getDropTicks() {
+		return 0;
+		//TODO: return the milliseconds for the block to fall at the current level
+	}
 
 }
