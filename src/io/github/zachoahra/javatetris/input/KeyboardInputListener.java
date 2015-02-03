@@ -1,5 +1,6 @@
 package io.github.zachoahra.javatetris.input;
 
+import io.github.zachoahra.javatetris.management.GameManager;
 import io.github.zachoahra.javatetris.window.GameWindow;
 
 import java.awt.event.KeyEvent;
@@ -12,19 +13,21 @@ import javax.swing.JFrame;
 public class KeyboardInputListener implements KeyListener {
 	
 	private GameWindow masterWindow;
+	private GameManager manager;
 	
 	private static final Integer[] defaultListenFor = {37, 38, 39, 40, 65, 87, 68, 83};
 	private static final boolean listenToAll = false;
 	private static final boolean displayOutputs = true;
 	private List<Integer> listenFor;
 	
-	public KeyboardInputListener(GameWindow master) {
+	public KeyboardInputListener(GameWindow master, GameManager manager) {
 		this.listenFor = Arrays.asList(defaultListenFor);
 		this.masterWindow = master;
+		this.manager = manager;
 	}
 	
 	public KeyboardInputListener() {
-		this(null);
+		this(null, null);
 	}
 	
 	@Override
@@ -32,6 +35,8 @@ public class KeyboardInputListener implements KeyListener {
 		if (listenToAll || this.listenFor.contains(e.getKeyCode())) {
 			if (this.masterWindow != null)
 				this.masterWindow.doInput(e.getKeyCode());
+			if (this.manager != null)
+				this.manager.doInput(e.getKeyCode());
 			if (displayOutputs)
 				System.out.println(e.getKeyCode());
 		}
@@ -39,6 +44,11 @@ public class KeyboardInputListener implements KeyListener {
 	
 	public KeyboardInputListener setMaster(GameWindow master) {
 		this.masterWindow = master;
+		return this;
+	}
+	
+	public KeyboardInputListener setManager(GameManager manager) {
+		this.manager = manager;
 		return this;
 	}
 

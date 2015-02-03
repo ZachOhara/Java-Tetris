@@ -36,8 +36,9 @@ public class GameWindow extends JFrame {
 	}
 	
 	public void doInput(int code) {
-		this.game.doInput(code);
+		//this.game.doInput(code);
 		// pass the input along to the game manager
+		System.out.println("GameWindow.doInput() call");
 	}
 
 }
