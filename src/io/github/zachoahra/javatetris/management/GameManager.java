@@ -5,6 +5,7 @@ import java.util.Arrays;
 import io.github.zachoahra.javatetris.game.BlockGrid;
 import io.github.zachoahra.javatetris.game.ShapeFactory;
 import io.github.zachoahra.javatetris.input.KeyboardInputListener;
+import io.github.zachoahra.javatetris.score.NumberImage;
 import io.github.zachoahra.javatetris.window.GameWindow;
 
 public class GameManager {
@@ -12,13 +13,17 @@ public class GameManager {
 	private GameWindow masterWindow;
 	private BlockGrid gameGrid;
 	private KeyboardInputListener keyListener;
+	private LevelManager levelManager;
+	private TimeManager timingManager;
+	private boolean isFastMode;
 	
 	private static final int gridWidth = 10;
 	private static final int gridHeight = 17;
+	private static final int[] inputRotate = {32};
 	private static final int[] inputLeft = {65, 37};
 	private static final int[] inputRight = {68, 39};
 	private static final int[] inputUp = {87, 38};
-	private static final int[] inputDown = {68, 40};
+	private static final int[] inputDown = {83, 40};
 	
 	public GameManager(GameWindow master) {
 		this.masterWindow = master;
@@ -26,28 +31,74 @@ public class GameManager {
 		this.gameGrid.setLocation(0, 0);
 		this.keyListener = new KeyboardInputListener(this.masterWindow, this);
 		this.masterWindow.addKeyListener(this.keyListener);
-		this.gameGrid.setShape(ShapeFactory.makeRandomShape());
 		this.masterWindow.add(this.gameGrid);
+		this.levelManager = new LevelManager();
+		this.timingManager = new TimeManager(this.levelManager, this);
+		this.isFastMode = false;
+		this.spawnNewShape();
+		this.timingManager.start();
+	}
+	
+	public void doGravity() {
+		System.out.println(this.isFastMode);
+		if (this.gameGrid.canShapeDescend())
+			this.gameGrid.descendShape();
+		else {
+			this.gameGrid.anchorShape();
+			this.checkLinesCleared();
+			this.spawnNewShape();
+		}
+	}
+	
+	private void checkLinesCleared() {
+		int[] lines = this.gameGrid.getFullLines();
+		this.gameGrid.removeAll(lines);
+		this.levelManager.clearLines(lines.length);
+	}
+	
+	private void spawnNewShape() {
+		this.gameGrid.setShape(ShapeFactory.makeRandomShape());
 	}
 	
 	public void doInput(int code) {
-		//TODO: make this less ugly, try to use list.contains()
-		//System.out.println("jdjd");
 		// left
-		//if (Arrays.asList(inputLeft).contains(code))
-		if (code == inputLeft[0] || code == inputLeft[1])
-			if (this.gameGrid.canShapeShift(-1)) {
-				this.gameGrid.shiftShape(-1);
-				System.out.println("left");
-			}
+		if (contains(inputLeft, code))
+			if (this.gameGrid.canShapeShift(-1))
+				this.gameGrid.shiftShape(-1); 
 		// right
-		if (code == inputRight[0] || code == inputRight[1])
-			if (this.gameGrid.canShapeShift(1)) {
+		if (contains(inputRight, code))
+			if (this.gameGrid.canShapeShift(1))
 				this.gameGrid.shiftShape(1);
-				System.out.println("right");
-			}
-		//TODO: down for soft drop
-		//TODO: up for firm drop
+		// down
+		if (contains(inputDown, code)) {
+			this.isFastMode = true;
+			this.timingManager.interrupt();
+		}
+		// up
+		if (contains(inputUp, code))
+			this.gameGrid.hardDrop();
+		// rotate
+		if (contains(inputRotate, code))
+			//if (this.gameGrid.canRotate(1))
+				this.gameGrid.rotateShape(1);
+	}
+	
+	public void doReleaseInput(int code) {
+		System.out.println("fastoff");
+		if (contains(inputDown, code))
+			this.isFastMode = false;
+	}
+	
+	// TODO: move fastMode functionality to TimeManger
+	public boolean isFastMode() {
+		return this.isFastMode;
+	}
+	
+	private static boolean contains(int[] arr, int elem) {
+		for (int i : arr)
+			if (i == elem)
+				return true;
+		return false;
 	}
 	
 	public static void main(String[] args) {
