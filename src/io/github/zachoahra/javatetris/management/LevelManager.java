@@ -4,6 +4,7 @@ public class LevelManager {
 	
 	private int level;
 	private int dropSpeed; // in frames per line @ 60fps
+	private int linesToNext; // ...level
 	
 	private static final int[] linePoints = {0, 40, 100, 300, 1200};
 	
@@ -40,8 +41,20 @@ public class LevelManager {
 		return linePoints[lines] * (this.level + 1);
 	}
 	
+	public void clearLines(int lines) {
+		this.linesToNext += lines;
+		while (this.linesToNext > 10) {
+			this.linesToNext -= 10;
+			this.levelUp();
+		}
+	}
+	
 	public int getDropTicks() {
-		return (int)(((double)this.dropSpeed / 600) * 1000);
+		return (int)(((double)this.dropSpeed / 60) * 1000);
+	}
+	
+	public int getDropFrames() {
+		return this.dropSpeed;
 	}
 
 }
