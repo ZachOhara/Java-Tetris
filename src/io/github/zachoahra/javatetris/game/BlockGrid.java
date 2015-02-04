@@ -35,8 +35,19 @@ public class BlockGrid extends JPanel {
 		this.update();
 	}
 	
+	public void hardDrop() {
+		while (this.canShapeDescend())
+			this.descendShape();
+		this.anchorShape();
+	}
+	
 	public void shiftShape(int d) {
 		this.currentShape.shiftLaterally(d);
+		this.update();
+	}
+	
+	public void rotateShape(int d) {
+		this.currentShape.rotate(d);
 		this.update();
 	}
 	
@@ -86,17 +97,40 @@ public class BlockGrid extends JPanel {
 		return true;
 	}
 	
-	public void removeLine(int l) {
-		//TODO: remove the blocks in a line and drop all above values by one row
+	public void removeAll(int[] lines) {
+		int correction = 0;
+		// the correction is used because as each line is removed, subsequent (full)
+		// lines will shift down one.
+		for (int i : lines) {
+			this.removeLine(i + correction);
+			correction++;
+		}
+		this.update();
 	}
 	
-	public Integer[] getFullLines() {
+	public void removeLine(int l) {
+		for (int i = 0; i < this.width; i++) {
+			if (this.blockgrid[l][i] != null)
+				this.remove(this.blockgrid[l][i]);
+			this.blockgrid[l][i] = null;
+		}
+		for (int i = l - 1; i >= 0; i--) {
+			for (int j = 0; j < this.width; j++) {
+				if (this.blockgrid[i][j] != null)
+					this.blockgrid[i][j].descend();
+				this.blockgrid[i + 1][j] = this.blockgrid[i][j];
+			}
+		}
+	}
+	
+	public int[] getFullLines() {
 		LinkedList<Integer> list = new LinkedList<Integer>();
-		for (int i = this.height - 1; i >= 0; i++) {
+		for (int i = this.height - 1; i >= 0; i--) {
 			if (this.lineIsFull(i))
 				list.add(i);
 		}
-		return list.toArray(new Integer[list.size()]);
+		Integer[] temp = list.toArray(new Integer[list.size()]);
+		return toIntArray(temp);
 	}
 	
 	public boolean lineIsFull(int l) {
@@ -109,6 +143,13 @@ public class BlockGrid extends JPanel {
 	private void update() {
 		this.revalidate();
 		this.repaint();
+	}
+	
+	private static int[] toIntArray(Integer[] intArr) {
+		int[] result = new int[intArr.length];
+		for (int i = 0; i < result.length; i++)
+			result[i] = intArr[i];
+		return result;
 	}
 	
 	public String toString() {
