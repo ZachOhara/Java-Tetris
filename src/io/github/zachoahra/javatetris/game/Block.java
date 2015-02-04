@@ -26,7 +26,7 @@ public class Block extends JPanel {
 		this.isAnchored = false;
 		this.texture = texture;
 		this.setSize(lengthPixels, lengthPixels);
-		JLabel textureLabel = this.texture.getLabel();
+		JLabel textureLabel = this.texture.getTexture().getLabel();
 		textureLabel.setLocation(0, 0);
 		textureLabel.setSize(lengthPixels, lengthPixels);
 		this.setLayout(null);

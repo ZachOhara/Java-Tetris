@@ -87,7 +87,7 @@ public class NumberImage extends JPanel {
 		JLabel jl;
 		int tempNumber = this.number;
 		for (int i = newLength - digitWidthPix; i >= 0; i -= digitWidthPix) {
-			jl = DigitTexture.get(tempNumber % 10).getLabel();
+			jl = DigitTexture.get(tempNumber % 10).getTexture().getLabel();
 			jl.setLocation(i, 0);
 			this.add(jl);
 			tempNumber /= 10;
