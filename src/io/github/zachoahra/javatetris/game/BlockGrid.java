@@ -2,7 +2,6 @@ package io.github.zachoahra.javatetris.game;
 
 import java.util.LinkedList;
 
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 public class BlockGrid extends JPanel {
@@ -30,85 +29,90 @@ public class BlockGrid extends JPanel {
 		this.update();
 	}
 	
-	public void descendShape() {
-		this.currentShape.descend(1);
+	public boolean descendShape() {
+		if (this.isTranslationViable(0, 1))
+			this.currentShape.translate(0, 1);
+		else
+			return false;
 		this.update();
-	}
-	
-	public void hardDrop() {
-		while (this.canShapeDescend())
-			this.descendShape();
-		this.anchorShape();
-	}
-	
-	public void shiftShape(int d) {
-		this.currentShape.shiftLaterally(d);
-		this.update();
-	}
-	
-	public void rotateShape(int d) {
-		this.currentShape.rotate(d);
-		this.update();
-	}
-	
-	public void anchorShape() {
-		this.currentShape.anchor();
-		Block[][] grid = this.currentShape.getBlockGrid();
-		int x = this.currentShape.getXPos();
-		int y = this.currentShape.getYPos();
-		for (int i = 0; i < 4; i++) {
-			for (int j = 0; j < 4; j++) {
-				if (grid[i][j] != null)
-					this.blockgrid[i+y][j+x] = grid[i][j];
-			}
-		}
-		this.update();
-	}
-	
-	public boolean canShapeDescend() {
-		Block[][] shapeGrid = this.currentShape.getBlockGrid();
-		int x = this.currentShape.getXPos();
-		int y = this.currentShape.getYPos();
-		y++;
-		for (int i = 0; i < 4; i++) {
-			for (int j = 0; j < 4; j++) {
-				if (i + y >= this.height && shapeGrid[i][j] != null)
-					return false;
-				if (i + y >= 0 && shapeGrid[i][j] != null && this.blockgrid[i+y][j+x] != null)
-					return false;
-			}
-		}
 		return true;
 	}
 	
-	public boolean canShapeShift(int d) {
-		Block[][] shapeGrid = this.currentShape.getBlockGrid();
+	public boolean shiftShape(int d) {
+		if (this.isTranslationViable(d, 0))
+			this.currentShape.translate(d, 0);
+		else
+			return false;
+		this.update();
+		return true;
+	}
+	
+	public boolean rotateShape(int d) {
+		if (this.isTranslationViable(this.currentShape.testRotate(d), 0, 0))
+			this.currentShape.rotate(d);
+		else
+			return false;
+		this.update();
+		return true;
+	}
+	
+	public void hardDrop() {
+		int i = 0;
+		while (this.isTranslationViable(0, i))
+			i++;
+		this.currentShape.translate(0, i - 1);
+		this.anchorShape();
+	}
+	
+	public void anchorShape() {
+		Block[][] grid = this.currentShape.getBlockGrid();
 		int x = this.currentShape.getXPos();
 		int y = this.currentShape.getYPos();
-		x += d;
 		for (int i = 0; i < 4; i++)
 			for (int j = 0; j < 4; j++)
-				if (shapeGrid[i][j] != null) {
-					if (x + j < 0 || x + j >= this.width)
+				if (grid[i][j] != null)
+					this.blockgrid[i+y][j+x] = grid[i][j];
+		this.update();
+	}
+	
+	public boolean isShapeViable() {
+		return this.isTranslationViable(0, 0);
+	}
+	
+	private boolean isTranslationViable(int dx, int dy) {
+		return this.isTranslationViable(this.currentShape.getBlockGrid(), dx, dy);
+	}
+	
+	private boolean isTranslationViable(Block[][] prospective, int dx, int dy) {
+		int x = dx + this.currentShape.getXPos();
+		int y = dy + this.currentShape.getYPos();
+		int xN, yN; //the 'new' coordinates of elements
+		for (int i = 0; i < prospective.length; i++) {
+			yN = i + y;
+			for (int j = 0; j < prospective[i].length; j++)
+				if (prospective[i][j] != null) {
+					xN = j + x;
+					// if new coordinate is out of range (don't check for y < 0)
+					if (!(yN < this.height) || !(0 <= xN && xN < this.width))
 						return false;
-					if (this.blockgrid[i+y][j+x] != null)
+					// if prospective space is alread occupied (check for y<0 here)
+					if (yN >= 0 && this.blockgrid[yN][xN] != null)
 						return false;
 				}
+		}
 		return true;
 	}
 	
 	public void removeAll(int[] lines) {
 		int correction = 0;
-		// the correction is used because as each line is removed, subsequent (full)
-		// lines will shift down one.
 		for (int i : lines) {
-			this.removeLine(i + correction);
+			this.clearLine(i + correction);
 			correction++;
 		}
 		this.update();
 	}
 	
-	public void removeLine(int l) {
+	private void clearLine(int l) {
 		for (int i = 0; i < this.width; i++) {
 			if (this.blockgrid[l][i] != null)
 				this.remove(this.blockgrid[l][i]);
@@ -117,7 +121,7 @@ public class BlockGrid extends JPanel {
 		for (int i = l - 1; i >= 0; i--) {
 			for (int j = 0; j < this.width; j++) {
 				if (this.blockgrid[i][j] != null)
-					this.blockgrid[i][j].descend();
+					this.blockgrid[i][j].translate(0, 1);
 				this.blockgrid[i + 1][j] = this.blockgrid[i][j];
 			}
 		}
@@ -133,9 +137,9 @@ public class BlockGrid extends JPanel {
 		return toIntArray(temp);
 	}
 	
-	public boolean lineIsFull(int l) {
-		for (int i = 0; i < this.width; i++)
-			if (this.blockgrid[l][i] == null)
+	private boolean lineIsFull(int l) {
+		for (Block b : this.blockgrid[l])
+			if (b == null)
 				return false;
 		return true;
 	}
@@ -150,59 +154,6 @@ public class BlockGrid extends JPanel {
 		for (int i = 0; i < result.length; i++)
 			result[i] = intArr[i];
 		return result;
-	}
-	
-	public String toString() {
-		String result = "";
-		for (Block[] bArr : this.blockgrid) {
-			for (Block b : bArr) {
-				if (b == null)
-					result += "-";
-				else
-					result += "X";
-			}
-			result += "\n";
-		}
-		return result;
-	}
-	
-	public static void main(String[] args) throws InterruptedException {		
-		JFrame f = new JFrame();
-		f.setSize(500, 900);
-		f.setLayout(null);
-		f.setLocationRelativeTo(null);
-		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
-		BlockGrid g = new BlockGrid(10, 17);
-		g.setLayout(null);
-		g.setLocation(0, 0);
-		f.add(g);
-		
-		g.setShape(ShapeFactory.makeRandomShape());
-		g.repaint();
-		f.repaint();
-		//System.out.println(g);
-		
-		f.setVisible(true);
-		//System.exit(0);
-		int shift = 1;
-		while (true) {
-			//System.out.println("point A");
-			while (g.canShapeDescend()) {
-				Thread.sleep(300);
-				g.descendShape();
-				if (g.canShapeShift(shift))
-					g.shiftShape(shift);
-				f.revalidate();
-				f.repaint();			
-			}
-			g.anchorShape();
-			System.out.println("Can't descend!");
-			//System.out.println(g);
-			g.setShape(ShapeFactory.makeRandomShape());
-			shift = -shift;
-		}
-		
 	}
 
 }
