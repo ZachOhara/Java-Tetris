@@ -1,11 +1,8 @@
 package io.github.zachoahra.javatetris.management;
 
-import java.util.Arrays;
-
 import io.github.zachoahra.javatetris.game.BlockGrid;
 import io.github.zachoahra.javatetris.game.ShapeFactory;
 import io.github.zachoahra.javatetris.input.KeyboardInputListener;
-import io.github.zachoahra.javatetris.score.NumberImage;
 import io.github.zachoahra.javatetris.window.GameWindow;
 
 public class GameManager {
@@ -40,13 +37,13 @@ public class GameManager {
 	}
 	
 	public void doGravity() {
-		System.out.println(this.isFastMode);
-		if (this.gameGrid.canShapeDescend())
-			this.gameGrid.descendShape();
-		else {
+		if (!(this.gameGrid.descendShape())) {
 			this.gameGrid.anchorShape();
 			this.checkLinesCleared();
 			this.spawnNewShape();
+			if (!this.gameGrid.isShapeViable()) {
+				System.out.println("GAME OVER");
+			}
 		}
 	}
 	
@@ -63,12 +60,10 @@ public class GameManager {
 	public void doInput(int code) {
 		// left
 		if (contains(inputLeft, code))
-			if (this.gameGrid.canShapeShift(-1))
-				this.gameGrid.shiftShape(-1); 
+			this.gameGrid.shiftShape(-1); 
 		// right
 		if (contains(inputRight, code))
-			if (this.gameGrid.canShapeShift(1))
-				this.gameGrid.shiftShape(1);
+			this.gameGrid.shiftShape(1);
 		// down
 		if (contains(inputDown, code)) {
 			this.isFastMode = true;
@@ -79,8 +74,7 @@ public class GameManager {
 			this.gameGrid.hardDrop();
 		// rotate
 		if (contains(inputRotate, code))
-			//if (this.gameGrid.canRotate(1))
-				this.gameGrid.rotateShape(1);
+			this.gameGrid.rotateShape(1);
 	}
 	
 	public void doReleaseInput(int code) {
