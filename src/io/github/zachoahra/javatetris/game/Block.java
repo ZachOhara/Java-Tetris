@@ -42,18 +42,10 @@ public class Block extends JPanel {
 		this.setLocation(x * lengthPixels, y * lengthPixels);
 	}
 	
-	public void shift(int dir) {
-		this.changeLocation(lengthPixels * dir, 0);
-	}
-	
-	public void descend() {
-		this.changeLocation(0, lengthPixels);
-	}
-	
-	private void changeLocation(int dx, int dy) {
+	public void translate(int dx, int dy) {
 		Point p = this.getLocation();
-		p.x += dx;
-		p.y += dy;
+		p.x += dx * lengthPixels;
+		p.y += dy * lengthPixels;
 		this.setLocation(p);
 	}
 	
