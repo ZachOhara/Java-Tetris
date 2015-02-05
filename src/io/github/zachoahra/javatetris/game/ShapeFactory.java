@@ -9,6 +9,7 @@ public abstract class ShapeFactory {
 		{true, true, true, true}
 	};
 	private static final boolean[][] Obool = {
+		{},
 		{true, true},
 		{true, true}
 	};
@@ -76,7 +77,7 @@ public abstract class ShapeFactory {
 	}
 
 	public static Shape makeO() {
-		return new Shape(O).descend(1);
+		return new Shape(O);
 	}
 
 	public static Shape makeT() {
