@@ -2,23 +2,20 @@ package io.github.zachoahra.javatetris.game;
 
 import io.github.zachoahra.javatetris.resource.texture.block.BlockTexture;
 
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 public class Shape {
 
-	private int xPos;
+	private int xPos; //position of upper-left corner in the grid
 	private int yPos;
-	private boolean falling;
-	private int rotation;
-	private int rotatability;
-	private Block[][] blocks;
-	private int xCenter;
+	private int rotation; // the current rotation of the shape
+	private int rotatability; // the possible rotations of the shape
+	private int xCenter; // the center point of rotatation
 	private int yCenter;
-	private JPanel masterPanel;
-
+	private Block[][] blocks; // the actual matrix of blocks in this shape; always 4x4
+	private JPanel masterPanel; // a reference to the containing panel
+	
 	public Shape(BlockTexture texture, boolean[][] placements, int xc, int yc, int r) {
-		this.falling = false;
 		this.rotation = 0;
 		this.rotatability = r;
 		this.xCenter = xc;
@@ -33,9 +30,7 @@ public class Shape {
 	public Shape(Shape s) {
 		this(null, null, s.xCenter, s.yCenter, s.rotatability);
 		this.rotation = s.rotation;
-		this.falling = s.falling;
-		this.masterPanel = s.masterPanel;
-		this.copyBlocks(s.blocks);
+		this.initBlocks(s.blocks);
 		this.setGridPosition(3, -1);
 	}
 
@@ -44,73 +39,33 @@ public class Shape {
 		for (Block[] bArr : blocks)
 			for (Block b : bArr)
 				if (b != null)
-					panel.add(b);
-	}
-	
-	public void setGridPosition(int x, int y) {
-		this.xPos = x;
-		this.yPos = y;
-		this.updateBlockGridPositions();
-	}
-	
-	private void updateBlockGridPositions() {
-		for (int i = 0; i < 4; i++)
-			for (int j = 0; j < 4; j++)
-				if (this.blocks[i][j] != null)
-					this.blocks[i][j].setGridPos(j + this.xPos, i + this.yPos);
+					this.masterPanel.add(b);
 	}
 
 	public Block[][] getBlockGrid() {
 		return this.blocks;
 	}
 
-	public boolean[][] generatePlacementGrid() {		
-		boolean[][] result = new boolean[4][4];
-		for (int i = 0; i < 4; i++) {
-			for (int j = 0; j < 4; j++) {
-				if (this.blocks[i][j] != null)
-					result[i][j] = true;
-				else
-					result[i][j] = false;
-			}
-		}
-		return result;
-	}
-
 	public void rotate(int r) {
-		r = r % this.rotatability;
 		int newR = this.rotation + r;
 		while (newR < 0)
 			newR += this.rotatability;
 		newR %= this.rotatability;
 		int dR =  newR - this.rotation;
-		if (dR < 0)
-			for (int i = 0; i > dR; i--)
-				this.rotateBlockArrayCCW();
-		else if (dR > 0)
-			for (int i = 0; i < dR; i++)
-				this.rotateBlockArrayCW();
+		this.blocks = this.rotateBlockArray(dR);
 		this.rotation = newR;
 		this.updateBlockGridPositions();
 	}
 	
-	public Shape descend(int d) {
-		this.applyTranslation(0, d);
-		return this;
+	public Block[][] testRotate(int r) {
+		return this.rotateBlockArray(r);
 	}
 	
-	public void shiftLaterally(int d) {
-		this.applyTranslation(d, 0);
-	}
-	
-	private void applyTranslation(int dx, int dy) {
+	public void translate(int dx, int dy) {
 		for (Block[] bArr : this.blocks)
 			for (Block b : bArr)
-				if (b != null) {
-					for (int i = 0; i < dy; i++)
-						b.descend();
-					b.shift(dx);
-				}
+				if (b != null)
+					b.translate(dx, dy);
 		this.xPos += dx;
 		this.yPos += dy;
 	}
@@ -123,129 +78,65 @@ public class Shape {
 		return this.yPos;
 	}
 	
-	public void anchor() {
-		for (Block[] bArr : this.blocks)
-			for (Block b : bArr)
-				if (b != null)
-					b.anchor();
-	}
-
-	private void rotateBlockArrayCCW() {
+	private Block[][] rotateBlockArray(int d) {
 		Block[][] result = new Block[4][4];
-		for (int i = 0; i < 4; i++)
-			for (int j = 0; j < 4; j++) {
-				int yN = i + xCenter - yCenter - 1;
-				int xN = j + xCenter + yCenter - 2;
-				if ( 0 <= yN && yN <= 3 && 0 <= xN && xN <= 3)
-					result[yN][xN] = this.blocks[j][3-i];
-			}
-		this.blocks = result;
+		// Signum of d is used often, so it's stored to make the lines simpler
+		int sd = Integer.signum(d);
+		if (sd == 0)
+			return this.blocks; // don't rotate? done.
+		// (xT, yT) is the post-rotation translation required to keep the shape centered properly
+		int yT = this.xCenter - this.yCenter;
+		int xT = this.xCenter + this.yCenter - 3;
+		// xO and yO are constants (either 3 or 0) that are used to account for the
+		// algorithm difference between clockwise and counter-clockwise rotation
+		int xO = 0;
+		int yO = 0;
+		if (sd == -1) {
+			yT--;
+			xT++;
+			xO = 3;
+		} else {
+			yO = 3;
+		}
+		int xN, yN;
+		for (int r = 0; Math.abs(r) < Math.abs(d); r += sd)
+			for (int i = 0; i < this.blocks.length; i++)
+				for (int j = 0; j < this.blocks[i].length; j++) {
+					xN = j + xT;
+					yN = i + yT;
+					if (0 <= yN && yN <= 3 && 0 <= xN && xN <= 3)
+						result[yN][xN] = this.blocks[yO - (sd * j)][xO + (sd * i)];
+				}
+		return result;
 	}
-
-	private void rotateBlockArrayCW() {
-		Block[][] result = new Block[4][4];
-		for (int i = 0; i < 4; i++)
-			for (int j = 0; j < 4; j++) {
-				int yN = i + xCenter - yCenter;
-				int xN = j + xCenter + yCenter - 3;
-				if ( 0 <= yN && yN <= 3 && 0 <= xN && xN <= 3)
-					result[yN][xN] = this.blocks[3-j][i];
-			}
-		this.blocks = result;
+	
+	private void setGridPosition(int x, int y) {
+		this.xPos = x;
+		this.yPos = y;
+		this.updateBlockGridPositions();
+	}
+	
+	private void updateBlockGridPositions() {
+		for (int i = 0; i < this.blocks.length; i++)
+			for (int j = 0; j < this.blocks[i].length; j++)
+				if (this.blocks[i][j] != null)
+					this.blocks[i][j].setGridPos(j + this.xPos, i + this.yPos);
 	}
 
 	private void initBlocks(BlockTexture texture, boolean[][] placements) {
-		this.createBlankBlockMatrix();
+		this.blocks = new Block[4][4];	
 		for (int i = 0; i < placements.length; i++)
 			for (int j = 0; j < placements[i].length; j++)
 				if (placements[i][j])
 					this.blocks[i][j] = new Block(texture);
 	}
 	
-	private void copyBlocks(Block[][] bMat) {
-		this.createBlankBlockMatrix();
-		for (int i = 0; i < 4; i++)
-			for (int j = 0; j < 4; j++)
-				if (bMat[i][j] != null)
-					this.blocks[i][j] = new Block(bMat[i][j]);
+	private void initBlocks(Block[][] blockMatrix) {
+		this.blocks = new Block[4][4];	
+		for (int i = 0; i < this.blocks.length; i++)
+			for (int j = 0; j < this.blocks[i].length; j++)
+				if (blockMatrix[i][j] != null)
+					this.blocks[i][j] = new Block(blockMatrix[i][j]);
 	}
-	
-	private void createBlankBlockMatrix() {
-		this.blocks = new Block[4][4];
-		for (int i = 0; i < 4; i++)
-			for (int j = 0; j < 4; j++)
-				this.blocks[i][j] = null;
-		
-	}
-
-	public String toString() {
-		String result = "";
-		for (Block[] bArr : this.blocks) {
-			for (Block b : bArr) {
-				if (b == null)
-					result += "-";
-				else
-					result += "X";
-			}
-			result += "\n";
-		}
-		return result;
-	}	
-	
-	public static void main(String[] args) throws InterruptedException {
-		JFrame f = new JFrame();
-		f.setSize(800, 400);
-		f.setLayout(null);
-		f.setLocationRelativeTo(null);
-		JPanel p = new JPanel();
-		p.setLayout(null);
-		p.setSize(800,400);
-		p.setLocation(0,0);
-		f.add(p);
-		Shape s = ShapeFactory.makeRandomShape();
-		s.setPanel(p);
-		p.repaint();
-		f.repaint();
-		f.setVisible(true);
-		for (int i = 0; i < 4; i++) {
-			Thread.sleep(1000);
-			s.descend(1);
-			p.repaint();
-			f.repaint();
-		}
-	}
-	
-	/*
-	public static void main(String[] args) {
-		Shape s = null;
-		for (int i = 0; i <= 6; i++) {
-			s = ShapeFactory.makeShapeByID(i);
-			System.out.println("New Shape!");
-			for (int j = 0; j < 4; j++) {
-				System.out.println(s);
-				s.rotate(1);
-			}
-			System.out.println("Change directions");
-			for (int j = 0; j < 4; j++) {
-				System.out.println(s);
-				s.rotate(-1);
-			}
-		}
-	}
-	*/
-	
-	/*
-	public static void main(String[] args) {
-		Shape s = ShapeFactory.makeI();
-		System.out.println(s);
-		for (int i = 0; i < 3; i++) {
-			s.rotate(1);
-			System.out.println(s);
-			s.rotate(-1);
-			//s.rotate(-1);
-			System.out.println(s);
-		}
-	}
-	*/
 
 }
