@@ -1,6 +1,10 @@
 package io.github.zachoahra.javatetris.management;
 
+import javax.swing.JPanel;
+
+import io.github.zachoahra.javatetris.game.Block;
 import io.github.zachoahra.javatetris.game.BlockGrid;
+import io.github.zachoahra.javatetris.game.Shape;
 import io.github.zachoahra.javatetris.game.ShapeFactory;
 import io.github.zachoahra.javatetris.input.KeyboardInputListener;
 import io.github.zachoahra.javatetris.window.GameWindow;
@@ -9,9 +13,12 @@ public class GameManager {
 	
 	private GameWindow masterWindow;
 	private BlockGrid gameGrid;
+	private Shape nextShape;
 	private KeyboardInputListener keyListener;
 	private LevelManager levelManager;
+	private ScoreManager scoreManager;
 	private TimeManager timingManager;
+	private JPanel nextShapePanel;
 	private boolean isFastMode;
 	
 	private static final int gridWidth = 10;
@@ -30,8 +37,14 @@ public class GameManager {
 		this.masterWindow.addKeyListener(this.keyListener);
 		this.masterWindow.add(this.gameGrid);
 		this.levelManager = new LevelManager();
+		this.scoreManager = new ScoreManager(this.masterWindow);
 		this.timingManager = new TimeManager(this.levelManager, this);
 		this.isFastMode = false;
+		this.nextShapePanel = new JPanel();
+		this.nextShapePanel.setLayout(null);
+		this.nextShapePanel.setLocation(650, 650);
+		this.nextShapePanel.setSize(Block.getLength() * 4, Block.getLength() * 4);
+		this.masterWindow.add(nextShapePanel);
 		this.spawnNewShape();
 		this.timingManager.start();
 	}
@@ -50,11 +63,25 @@ public class GameManager {
 	private void checkLinesCleared() {
 		int[] lines = this.gameGrid.getFullLines();
 		this.gameGrid.removeAll(lines);
+		this.scoreManager.addLines(lines.length);
+		this.scoreManager.addScore(this.levelManager.getLinePoints(lines.length));
 		this.levelManager.clearLines(lines.length);
+		this.scoreManager.setLevel(this.levelManager.getLevel());
 	}
 	
 	private void spawnNewShape() {
-		this.gameGrid.setShape(ShapeFactory.makeRandomShape());
+		this.nextShapePanel.removeAll();
+		if (this.nextShape != null) {
+			this.nextShape.translate(3, 0);
+			this.gameGrid.setShape(this.nextShape);
+		} else
+			this.gameGrid.setShape(ShapeFactory.makeRandomShape());
+		this.nextShape = ShapeFactory.makeRandomShape();
+		this.nextShape.translate(-3, 0);
+		this.nextShape.setPanel(this.nextShapePanel);
+		this.nextShapePanel.revalidate();
+		this.nextShapePanel.repaint();
+		
 	}
 	
 	public void doInput(int code) {

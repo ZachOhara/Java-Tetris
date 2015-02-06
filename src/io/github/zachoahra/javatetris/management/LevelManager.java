@@ -35,6 +35,10 @@ public class LevelManager {
 			this.dropSpeed = 1;
 	}
 	
+	public int getLevel() {
+		return this.level;
+	}
+	
 	public int getLinePoints(int lines) {
 		if (lines < 0 || lines > 4)
 			return 0;
@@ -43,7 +47,7 @@ public class LevelManager {
 	
 	public void clearLines(int lines) {
 		this.linesToNext += lines;
-		while (this.linesToNext > 10) {
+		while (this.linesToNext > 9) {
 			this.linesToNext -= 10;
 			this.levelUp();
 		}

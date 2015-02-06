@@ -63,6 +63,11 @@ public class NumberImage extends JPanel {
 		this.update();
 	}
 	
+	public void setLeftAlign(int x) {
+		int y = (int) this.getLocation().getY();
+		this.setLeftAlign(x, y);
+	}
+	
 	public void setLeftAlign(int x, int y) {
 		this.leftAlignX = x;
 		this.leftAlignY = y;

@@ -18,7 +18,7 @@ public class KeyboardInputListener implements KeyListener {
 	private static final Integer[] defaultListenFor = {32, 37, 38, 39, 40, 65, 87, 68, 83};
 	private static final Integer[] defaultReleaseListenFor = {40, 83};
 	private static final boolean listenToAll = false;
-	private static final boolean displayOutputs = true;
+	private static final boolean displayOutputs = false;
 	private List<Integer> listenFor;
 	private List<Integer> releaseListenFor;
 

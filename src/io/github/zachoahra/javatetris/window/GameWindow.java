@@ -31,12 +31,12 @@ public class GameWindow extends JFrame {
 	}
 	
 	private static Dimension getWindowSize() {
-		return new Dimension(500,900);
+		return new Dimension(1000,900);
 		//TODO: calculate size needs based on the size needs of the constituent window elements
 	}
 	
 	public void doInput(int code) {
-		//System.out.println("GameWindow.doInput() call");
+		// do nothing, for now
 	}
 
 }
