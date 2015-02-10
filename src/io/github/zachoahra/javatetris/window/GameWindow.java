@@ -24,6 +24,10 @@ public class GameWindow extends JFrame {
 		
 		this.game = new GameManager(this);
 	}
+	
+	public GameManager getGame() {
+		return this.game;
+	}
 
 	public static void main(String[] args) {
 		GameWindow g = new GameWindow();

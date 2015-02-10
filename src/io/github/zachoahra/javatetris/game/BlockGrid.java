@@ -22,6 +22,10 @@ public class BlockGrid extends JPanel {
 		this.setLayout(null);
 	}
 	
+	public Shape getCurrentShape() {
+		return this.currentShape;
+	}
+	
 	public void setShape(Shape s) {
 		this.currentShape = null;
 		this.currentShape = s;

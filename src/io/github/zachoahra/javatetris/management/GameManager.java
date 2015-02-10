@@ -49,6 +49,14 @@ public class GameManager {
 		this.timingManager.start();
 	}
 	
+	public BlockGrid getBlockGrid() {
+		return this.gameGrid;
+	}
+	
+	public Shape getNextShape() {
+		return this.nextShape;
+	}
+	
 	public void doGravity() {
 		if (!(this.gameGrid.descendShape())) {
 			this.gameGrid.anchorShape();
