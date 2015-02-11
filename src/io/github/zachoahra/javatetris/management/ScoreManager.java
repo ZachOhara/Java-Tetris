@@ -1,16 +1,16 @@
 package io.github.zachoahra.javatetris.management;
 
+import io.github.zachoahra.javatetris.score.NumberImage;
+import io.github.zachoahra.javatetris.window.TitleImage;
+
 import java.awt.Dimension;
 
+import javax.swing.JFrame;
 import javax.swing.JPanel;
-
-import io.github.zachoahra.javatetris.score.NumberImage;
-import io.github.zachoahra.javatetris.window.GameWindow;
-import io.github.zachoahra.javatetris.window.TitleImage;
 
 public class ScoreManager extends JPanel {
 
-	private GameWindow masterWindow;
+	private JFrame masterWindow;
 	
 	private TitleImage scoreTitle;
 	private TitleImage linesTitle;
@@ -24,13 +24,13 @@ public class ScoreManager extends JPanel {
 	
 	private static final long serialVersionUID = 1L;
 	
-	public ScoreManager(GameWindow g) {
+	public ScoreManager(JFrame window) {
 		super();
 		
 		this.setLayout(null);
 		this.setLocation(xPos, yPos);
 		
-		this.masterWindow = g;
+		this.masterWindow = window;
 		this.scoreTitle = new TitleImage("score");
 		this.linesTitle = new TitleImage("lines");
 		this.levelTitle = new TitleImage("level");
@@ -40,7 +40,7 @@ public class ScoreManager extends JPanel {
 		
 		int height = 0;
 		int width = 0;
-		Dimension d;
+		Dimension d; //temporary only
 		
 		this.scoreTitle.setLocation(0, height);
 		this.add(this.scoreTitle);
