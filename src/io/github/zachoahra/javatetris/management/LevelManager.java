@@ -8,13 +8,9 @@ public class LevelManager {
 	
 	private static final int[] linePoints = {0, 40, 100, 300, 1200};
 	
-	public LevelManager(int level) {
-		this.level = level;
-		this.dropSpeed = 48;
-	}
-	
 	public LevelManager() {
-		this(0);
+		this.level = 0;
+		this.dropSpeed = 48;
 	}
 	
 	public void levelUp() {
