@@ -99,7 +99,6 @@ public class NumberImage extends JPanel {
 		}
 		if (this.useLeftAlign) {
 			this.setLocation(this.leftAlignX - newLength, this.leftAlignY);
-			System.out.println(newLength + ", " + (this.leftAlignX - newLength));
 		}
 		this.revalidate();
 		this.repaint();
