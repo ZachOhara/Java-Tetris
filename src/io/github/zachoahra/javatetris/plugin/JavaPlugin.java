@@ -6,7 +6,7 @@ import io.github.zachoahra.javatetris.game.Shape;
 import io.github.zachoahra.javatetris.input.GameController;
 import io.github.zachoahra.javatetris.management.GameManager;
 
-public abstract class JavaPlugin implements GameController {
+public abstract class JavaPlugin extends Thread implements GameController {
 	
 	private GameManager game;
 	private boolean hasControl;
@@ -28,7 +28,7 @@ public abstract class JavaPlugin implements GameController {
 	
 	@Override
 	public void setGame(GameManager game) {
-		this.game = null;
+		this.game = game;
 	}
 	
 	public GameManager getGame() {
@@ -36,7 +36,7 @@ public abstract class JavaPlugin implements GameController {
 	}
 	
 	public boolean canControlGame() {
-		return this.game.isGameRunning() && this.hasControl();
+		return this.game.isRunning() && this.hasControl();
 	}
 	
 	public BlockGrid getBlockGrid() {

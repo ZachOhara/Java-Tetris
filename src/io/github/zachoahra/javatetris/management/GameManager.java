@@ -12,49 +12,70 @@ public class GameManager {
 	private LevelManager levelManager;
 	private ScoreManager scoreManager;
 	private NextBlockPanel nextShapePanel;
-	
+	private GameController currentController;
+
 	private BlockGrid gameGrid;
-	
-	private boolean isGameRunning;
-	
+
+	private boolean isRunning;
+	private boolean isPaused;
+
 	public GameManager(GameWindow master, LevelManager level, ScoreManager score, NextBlockPanel nextPanel) {
 		this.masterWindow = master;
 		this.levelManager = level;
 		this.scoreManager = score;
 		this.nextShapePanel = nextPanel;
-		
+
 		this.gameGrid = new BlockGrid(master);
 	}
 
-	public boolean isGameRunning() {
-		return this.isGameRunning;
+	public boolean isRunning() {
+		return this.isRunning;
+	}
+	
+	public boolean isPaused() {
+		return this.isPaused;
+	}
+	
+	public boolean isActive() {
+		return !this.isPaused && this.isRunning;
 	}
 
 	public BlockGrid getBlockGrid() {
 		return this.gameGrid;
 	}
-	
+
 	public NextBlockPanel getNextShapePanel() {
 		return this.nextShapePanel;
 	}
-	
+
 	public void setController(GameController gc) {
-		//do nothing for now
-	}
-	
-	public void startGame() {
-		this.isGameRunning = true;
-		this.spawnNewShape();
+		if (gc != null) {
+			if (this.currentController != null)
+				this.currentController.setControl(false);
+			this.currentController = gc;
+			this.currentController.setGame(this);
+			this.currentController.setControl(true);
+			this.currentController.start();
+		}
 	}
 
+	public void startGame() {
+		this.isRunning = true;
+		this.spawnNewShape();
+	}
+	
+	public void setPaused(boolean b) {
+		this.isPaused = b;
+	}
+	
 	public void doGravity() {
-		if (this.isGameRunning() && !(this.gameGrid.descendShape())) {
+		if (this.isActive() && !(this.gameGrid.descendShape())) {
 			this.gameGrid.anchorShape();
 			this.checkLinesCleared();
 			this.spawnNewShape();
 			if (!this.gameGrid.isShapeViable()) {
 				System.out.println("GAME OVER");
-				this.isGameRunning = false;
+				this.isRunning = false;
 				this.masterWindow.endGame();
 			}
 		}
@@ -76,11 +97,6 @@ public class GameManager {
 		else
 			this.gameGrid.setShape(ShapeFactory.makeRandomShape());
 		this.nextShapePanel.store(ShapeFactory.makeRandomShape());
-	}
-
-	public static void main(String[] args) {
-		GameWindow g = new GameWindow();
-		g.setVisible(true);
 	}
 
 }

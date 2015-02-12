@@ -12,7 +12,7 @@ import javax.swing.JFrame;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class PluginLoader {
-	
+
 	public static JavaPlugin handleLoadPlugin() {
 		JavaPlugin plugin = null;
 		try {
@@ -25,6 +25,7 @@ public class PluginLoader {
 			e.printStackTrace();
 		} catch (IllegalClassFormatException e) {
 			e.printStackTrace();
+		} catch (CancellationException ignore) {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -32,8 +33,8 @@ public class PluginLoader {
 	}
 
 	public static JavaPlugin loadPlugin() throws ClassNotFoundException,
-				NoSuchMethodException, IllegalAccessException,
-				IllegalClassFormatException, Exception {
+	NoSuchMethodException, IllegalAccessException,
+	IllegalClassFormatException, CancellationException, Exception {
 		JFrame dialogFrame = new JFrame();
 		dialogFrame.setResizable(false);
 		dialogFrame.setSize(500, 400);
@@ -69,8 +70,8 @@ public class PluginLoader {
 	 * 		necessarily the result of the plugin being incorrect
 	 */
 	private static JavaPlugin loadPlugin(URL url) throws ClassNotFoundException,
-				NoSuchMethodException, IllegalAccessException,
-				IllegalClassFormatException, Exception {
+	NoSuchMethodException, IllegalAccessException,
+	IllegalClassFormatException, Exception {
 		URL[] urlArray = {url};
 		URLClassLoader loader = new URLClassLoader(urlArray);
 		Class<?> targetClass = loader.loadClass("Robot");

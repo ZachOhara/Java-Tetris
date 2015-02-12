@@ -2,6 +2,8 @@ package io.github.zachoahra.javatetris.input;
 
 import io.github.zachoahra.javatetris.management.GameManager;
 import io.github.zachoahra.javatetris.management.TimeManager;
+import io.github.zachoahra.javatetris.plugin.JavaPlugin;
+import io.github.zachoahra.javatetris.plugin.PluginLoader;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -23,6 +25,7 @@ public class KeyboardInputManager implements KeyListener, GameController {
 	private static final Integer[] inputRight = {68, 39};
 	private static final Integer[] inputUp = {87, 38};
 	private static final Integer[] inputDown = {83, 40};
+	private static final Integer[] loadPlugin = {80};
 
 	public KeyboardInputManager(JFrame window, GameManager game, TimeManager time) {
 		this.setGame(game);
@@ -45,6 +48,11 @@ public class KeyboardInputManager implements KeyListener, GameController {
 	public void setGame(GameManager game) {
 		this.game = game;
 	}
+	
+	@Override
+	public void start() {
+		// do nothing
+	}
 
 	@Override
 	public void keyPressed(KeyEvent e) {
@@ -52,7 +60,7 @@ public class KeyboardInputManager implements KeyListener, GameController {
 		if (displayOutputs)
 			System.out.println(code);
 
-		if (this.hasControl && this.game.isGameRunning()) {
+		if (this.hasControl && this.game.isRunning()) {
 			// left
 			if (Arrays.asList(inputLeft).contains(code))
 				this.game.getBlockGrid().shiftShape(-1); 
@@ -74,13 +82,21 @@ public class KeyboardInputManager implements KeyListener, GameController {
 			if (Arrays.asList(inputRotateCCW).contains(code))
 				this.game.getBlockGrid().rotateShape(-1);
 		}
+		// load plugin
+		if (Arrays.asList(loadPlugin).contains(code)) {
+			this.game.setPaused(true);
+			JavaPlugin plugin = PluginLoader.handleLoadPlugin();
+			if (plugin != null)
+				this.game.setController(plugin);
+			else
+				this.game.setController(this);
+			this.game.setPaused(false);
+		}
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
 		int code = e.getKeyCode();
-		if (displayOutputs)
-			System.out.println(code);
 
 		if (this.hasControl)
 			if (Arrays.asList(inputDown).contains(code))
