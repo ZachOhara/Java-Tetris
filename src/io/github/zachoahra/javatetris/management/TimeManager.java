@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 
 package io.github.zachoahra.javatetris.management;
 
@@ -22,7 +22,7 @@ public class TimeManager extends Thread {
 	private LevelManager level;
 	private GameManager game;
 	private boolean isFastMode;
-	
+
 	private static final double fastFactor = 0.1 ;
 
 	public TimeManager(LevelManager level, GameManager game) {
@@ -46,11 +46,11 @@ public class TimeManager extends Thread {
 			game.doGravity();
 		}
 	}
-	
+
 	public boolean isFastMode() {
 		return this.isFastMode;
 	}
-	
+
 	public void setFastMode(boolean fastmode) {
 		this.isFastMode = fastmode;
 	}

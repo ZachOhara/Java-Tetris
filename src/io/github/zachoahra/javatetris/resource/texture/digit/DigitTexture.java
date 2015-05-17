@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 
 package io.github.zachoahra.javatetris.resource.texture.digit;
 
@@ -21,7 +21,7 @@ import io.github.zachoahra.javatetris.resource.texture.Texture;
 import io.github.zachoahra.javatetris.score.NumberImage;
 
 public enum DigitTexture {
-	
+
 	D0 ("0.png"),
 	D1 ("1.png"),
 	D2 ("2.png"),
@@ -32,9 +32,9 @@ public enum DigitTexture {
 	D7 ("7.png"),
 	D8 ("8.png"),
 	D9 ("9.png");
-	
+
 	private Texture texture;
-	
+
 	private DigitTexture(String filename) {
 		this.texture = new Texture(filename, NumberImage.getDigitWidthPix(), NumberImage.getDigitHeightPix(), this.getClass());
 	}
@@ -42,7 +42,7 @@ public enum DigitTexture {
 	public Texture getTexture() {
 		return this.texture;
 	}
-	
+
 	public static DigitTexture get(int i) {
 		switch(i) {
 		case 0:

@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 
 package io.github.zachoahra.javatetris.game;
 
@@ -24,10 +24,10 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 public class BlockGrid extends JPanel {
-	
+
 	private Shape currentShape;
 	private Block[][] blockgrid;
-	
+
 	private static final int xPos = 0;
 	private static final int yPos = 0;
 	private static final int gridWidth = 10;
@@ -202,15 +202,15 @@ public class BlockGrid extends JPanel {
 			result[i] = intArr[i];
 		return result;
 	}
-	
+
 	public static Dimension getStaticSize() {
 		return new Dimension(getStaticWidth(), getStaticHeight());
 	}
-	
+
 	public static int getStaticWidth() {
 		return Block.getLength() * gridWidth;
 	}
-	
+
 	public static int getStaticHeight() {
 		return Block.getLength() * gridHeight;
 	}

@@ -14,7 +14,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 
 package io.github.zachoahra.javatetris.game;
 
@@ -68,7 +68,7 @@ public abstract class ShapeFactory {
 	public static Shape makeRandomShape() {
 		return makeShapeByID((int)(Math.random() * 7));
 	}
-	
+
 	public static Shape makeShapeByID(int id) {
 		switch(id) {
 		case 0:

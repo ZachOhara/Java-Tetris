@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 
 package io.github.zachoahra.javatetris.input;
 
@@ -65,7 +65,7 @@ public class KeyboardInputManager implements KeyListener, GameController {
 	public void setGame(GameManager game) {
 		this.game = game;
 	}
-	
+
 	@Override
 	public void start() {
 		// do nothing

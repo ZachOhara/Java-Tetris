@@ -15,18 +15,18 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 
 package io.github.zachoahra.javatetris.input;
 
 import io.github.zachoahra.javatetris.management.GameManager;
 
 public interface GameController {
-		
+
 	public void setGame(GameManager game);
 	public boolean hasControl();
 	public void setControl(boolean b);
-	
+
 	public void start();
 
 }

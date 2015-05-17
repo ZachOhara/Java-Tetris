@@ -14,7 +14,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 
 package io.github.zachoahra.javatetris.resource.texture.letter;
 
@@ -22,7 +22,7 @@ import io.github.zachoahra.javatetris.resource.texture.Texture;
 import io.github.zachoahra.javatetris.window.TitleImage;
 
 public enum LetterTexture {
-	
+
 	A ("a.png"),
 	B ("b.png"),
 	C ("c.png"),
@@ -49,21 +49,21 @@ public enum LetterTexture {
 	X ("x.png"),
 	Y ("y.png"),
 	Z ("z.png");
-	
+
 	private Texture texture;
-	
+
 	private LetterTexture(String filename) {
 		this.texture = new Texture(filename, TitleImage.getLetterwidthpix(), TitleImage.getLetterheightpix(), this.getClass());
 	}
-	
+
 	public Texture getTexture() {
 		return this.texture;
 	}
-	
+
 	public static LetterTexture get(String s) {
 		return get(s.toCharArray()[0]);
 	}
-	
+
 	public static LetterTexture get(char c) {
 		c = Character.toLowerCase(c);
 		switch(c) {
@@ -120,7 +120,7 @@ public enum LetterTexture {
 		case 'z':
 			return Z;
 		default:
-				return null;
+			return null;
 		}
 	}
 

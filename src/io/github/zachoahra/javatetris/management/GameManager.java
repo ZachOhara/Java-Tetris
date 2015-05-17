@@ -14,7 +14,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 
 package io.github.zachoahra.javatetris.management;
 
@@ -49,11 +49,11 @@ public class GameManager {
 	public boolean isRunning() {
 		return this.isRunning;
 	}
-	
+
 	public boolean isPaused() {
 		return this.isPaused;
 	}
-	
+
 	public boolean isActive() {
 		return !this.isPaused && this.isRunning;
 	}
@@ -81,11 +81,11 @@ public class GameManager {
 		this.isRunning = true;
 		this.spawnNewShape();
 	}
-	
+
 	public void setPaused(boolean b) {
 		this.isPaused = b;
 	}
-	
+
 	public void doGravity() {
 		if (this.isActive() && !(this.gameGrid.descendShape())) {
 			this.gameGrid.anchorShape();

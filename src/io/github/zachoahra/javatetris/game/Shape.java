@@ -14,7 +14,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 
 package io.github.zachoahra.javatetris.game;
 
@@ -32,7 +32,7 @@ public class Shape {
 	private int yCenter;
 	private Block[][] blocks; // the actual matrix of blocks in this shape; always 4x4
 	private JPanel masterPanel; // a reference to the containing panel
-	
+
 	public Shape(BlockTexture texture, boolean[][] placements, int xc, int yc, int r) {
 		this.rotation = 0;
 		this.rotatability = r;
@@ -74,11 +74,11 @@ public class Shape {
 		this.rotation = newR;
 		this.updateBlockGridPositions();
 	}
-	
+
 	public Block[][] testRotate(int r) {
 		return this.rotateBlockArray(r);
 	}
-	
+
 	public void translate(int dx, int dy) {
 		for (Block[] bArr : this.blocks)
 			for (Block b : bArr)
@@ -87,15 +87,15 @@ public class Shape {
 		this.xPos += dx;
 		this.yPos += dy;
 	}
-	
+
 	public int getXPos() {
 		return this.xPos;
 	}
-	
+
 	public int getYPos() {
 		return this.yPos;
 	}
-	
+
 	private Block[][] rotateBlockArray(int d) {
 		Block[][] result = new Block[4][4];
 		// Signum of d is used often, so it's stored to make the lines simpler
@@ -127,13 +127,13 @@ public class Shape {
 				}
 		return result;
 	}
-	
+
 	private void setGridPosition(int x, int y) {
 		this.xPos = x;
 		this.yPos = y;
 		this.updateBlockGridPositions();
 	}
-	
+
 	private void updateBlockGridPositions() {
 		for (int i = 0; i < this.blocks.length; i++)
 			for (int j = 0; j < this.blocks[i].length; j++)
@@ -148,7 +148,7 @@ public class Shape {
 				if (placements[i][j])
 					this.blocks[i][j] = new Block(texture);
 	}
-	
+
 	private void initBlocks(Block[][] blockMatrix) {
 		this.blocks = new Block[4][4];	
 		for (int i = 0; i < this.blocks.length; i++)

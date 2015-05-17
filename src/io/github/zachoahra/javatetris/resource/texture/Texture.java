@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 
 package io.github.zachoahra.javatetris.resource.texture;
 
@@ -28,10 +28,10 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
 public class Texture {
-	
+
 	private BufferedImage texture;
 	private String filename;
-	
+
 	public Texture(String filename, int width, int height, Class<?> resourceclass) {
 		this.filename = filename;
 		BufferedImage temp = null;
@@ -62,7 +62,7 @@ public class Texture {
 		g.dispose();
 		return db;
 	}
-	
+
 	public String toString() {
 		return this.filename.substring(0, this.filename.length() - 4);
 	}

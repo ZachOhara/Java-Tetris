@@ -14,7 +14,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 
 package io.github.zachoahra.javatetris.window;
 
@@ -25,14 +25,14 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 public class NextBlockPanel extends JPanel {
-	
+
 	private Shape nextShape = null;
-	
+
 	private static final int xPos = 650;
 	private static final int yPos = 650;
 
 	private static final long serialVersionUID = 1L;
-	
+
 	public NextBlockPanel(JFrame window) {
 		super();
 		this.setLayout(null);
@@ -40,7 +40,7 @@ public class NextBlockPanel extends JPanel {
 		this.setSize(getLength(), getLength());
 		window.add(this);
 	}
-	
+
 	public Shape retrieve() {
 		this.removeAll();
 		this.update();
@@ -49,29 +49,29 @@ public class NextBlockPanel extends JPanel {
 		this.nextShape = null;
 		return temp;
 	}
-	
+
 	public Shape read() {
 		return this.nextShape;
 	}
-	
+
 	public void store(Shape nextShape) {
 		this.nextShape = nextShape;
 		this.nextShape.translate(-3, 0);
 		this.nextShape.setPanel(this);
 		this.update();
 	}
-	
+
 	public boolean shapeIsNull() {
 		return this.nextShape == null;
 	}
-	
+
 	private void update() {
 		this.revalidate();
 		this.repaint();
 	}
-	
+
 	public static int getLength() {
 		return Block.getLength() * 4;
 	}
-	
+
 }

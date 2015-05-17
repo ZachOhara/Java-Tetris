@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 
 package io.github.zachoahra.javatetris.score;
 
@@ -33,12 +33,12 @@ public class NumberImage extends JPanel {
 	private boolean useLeftAlign;
 	private int leftAlignX;
 	private int leftAlignY;
-	
+
 	private static final int digitWidthPix = 60;
 	private static final int digitHeightPix = 100;
-	
+
 	private static final long serialVersionUID = 1L;
-	
+
 	public NumberImage(int n) {
 		super();
 		this.setLayout(null);
@@ -48,7 +48,7 @@ public class NumberImage extends JPanel {
 		this.setLeftAlign(false);
 		this.update();
 	}
-	
+
 	public NumberImage() {
 		this(0);
 	}
@@ -60,7 +60,7 @@ public class NumberImage extends JPanel {
 	public static int getDigitHeightPix() {
 		return digitHeightPix;
 	}
-	
+
 	public int getNumber() {
 		return number;
 	}
@@ -69,34 +69,34 @@ public class NumberImage extends JPanel {
 		this.number = n;
 		this.update();
 	}
-	
+
 	public void setTotalDigits(int d) {
 		this.holdTotalDigits = d;
 		this.update();
 	}
-	
+
 	public void changeNumber(int dn) {
 		this.number += dn;
 		this.update();
 	}
-	
+
 	public void setLeftAlign(int x) {
 		int y = (int) this.getLocation().getY();
 		this.setLeftAlign(x, y);
 	}
-	
+
 	public void setLeftAlign(int x, int y) {
 		this.leftAlignX = x;
 		this.leftAlignY = y;
 		this.useLeftAlign = true;
 		this.update();
 	}
-	
+
 	public void setLeftAlign(boolean b) {
 		this.useLeftAlign = b;
 		this.update();
 	}
-	
+
 	private void update() {
 		this.removeAll();
 		this.numberLength = new Integer(this.number).toString().length();
@@ -120,7 +120,7 @@ public class NumberImage extends JPanel {
 		this.revalidate();
 		this.repaint();
 	}
-	
+
 	public static void main(String[] args) throws InterruptedException {
 		JFrame f = new JFrame();
 		f.setLayout(null);
@@ -128,12 +128,12 @@ public class NumberImage extends JPanel {
 		NumberImage ni = new NumberImage(25005);
 		ni.setTotalDigits(8);
 		ni.setLeftAlign(800, 0);
-		
+
 		JPanel p = new JPanel();
 		p.setBackground(Color.BLACK);
 		p.setSize(100, 100);
 		p.setLocation(800, 0);
-		
+
 		f.add(ni);
 		f.add(p);
 		f.setVisible(true);

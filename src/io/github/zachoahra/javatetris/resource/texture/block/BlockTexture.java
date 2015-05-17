@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 
 package io.github.zachoahra.javatetris.resource.texture.block;
 
@@ -29,13 +29,13 @@ public enum BlockTexture {
 	PURPLE ("purple.png"),
 	RED ("red.png"),
 	YELLOW ("yellow.png");
-	
+
 	private Texture texture;
-	
+
 	private BlockTexture(String filename) {
 		this.texture = new Texture(filename, Block.getLength(), Block.getLength(), this.getClass());
 	}
-	
+
 	public Texture getTexture() {
 		return this.texture;
 	}
