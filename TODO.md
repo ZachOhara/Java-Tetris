@@ -1,5 +1,6 @@
 # To-do List for Java Tetris
 
+* Add an icon
 * Override toString() in all classes
 * Add support for window resizing
 * Add a better-looking scoring system
