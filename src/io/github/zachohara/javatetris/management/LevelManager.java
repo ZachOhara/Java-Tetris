@@ -31,20 +31,21 @@ public class LevelManager {
 
 	public void levelUp() {
 		this.level++;
-		if (this.level <= 8)
+		if (this.level <= 8) {
 			this.dropSpeed -= 5;
-		else if (this.level == 9)
+		} else if (this.level == 9) {
 			this.dropSpeed = 6;
-		else if (this.level <= 12)
+		} else if (this.level <= 12) {
 			this.dropSpeed = 5;
-		else if (this.level <= 15)
+		} else if (this.level <= 15) {
 			this.dropSpeed = 4;
-		else if (this.level <= 18)
+		} else if (this.level <= 18) {
 			this.dropSpeed = 3;
-		else if (this.level <= 28)
+		} else if (this.level <= 28) {
 			this.dropSpeed = 2;
-		else
+		} else {
 			this.dropSpeed = 1;
+		}
 	}
 
 	public int getLevel() {
@@ -52,9 +53,10 @@ public class LevelManager {
 	}
 
 	public int getLinePoints(int lines) {
-		if (lines < 0 || lines > 4)
+		if (lines < 0 || lines > 4) {
 			return 0;
-		return linePoints[lines] * (this.level + 1);
+		}
+		return LevelManager.linePoints[lines] * (this.level + 1);
 	}
 
 	public void clearLines(int lines) {
@@ -66,7 +68,7 @@ public class LevelManager {
 	}
 
 	public int getDropTicks() {
-		return (int)(((double)this.dropSpeed / 60) * 1000);
+		return (int) (((double) this.dropSpeed / 60) * 1000);
 	}
 
 	public int getDropFrames() {

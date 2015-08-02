@@ -16,10 +16,9 @@
 
 package io.github.zachohara.javatetris.score;
 
-import java.awt.Color;
-
-import io.github.zachohara.javatetris.score.NumberImage;
 import io.github.zachohara.javatetris.resource.texture.digit.DigitTexture;
+
+import java.awt.Color;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -54,15 +53,15 @@ public class NumberImage extends JPanel {
 	}
 
 	public static int getDigitWidthPix() {
-		return digitWidthPix;
+		return NumberImage.digitWidthPix;
 	}
 
 	public static int getDigitHeightPix() {
-		return digitHeightPix;
+		return NumberImage.digitHeightPix;
 	}
 
 	public int getNumber() {
-		return number;
+		return this.number;
 	}
 
 	public void setNumber(int n) {
@@ -101,14 +100,15 @@ public class NumberImage extends JPanel {
 		this.removeAll();
 		this.numberLength = new Integer(this.number).toString().length();
 		int newLength;
-		if (this.holdTotalDigits != 0)
-			newLength = this.holdTotalDigits * digitWidthPix;
-		else
-			newLength = this.numberLength * digitWidthPix;
-		this.setSize(newLength, digitHeightPix);
+		if (this.holdTotalDigits != 0) {
+			newLength = this.holdTotalDigits * NumberImage.digitWidthPix;
+		} else {
+			newLength = this.numberLength * NumberImage.digitWidthPix;
+		}
+		this.setSize(newLength, NumberImage.digitHeightPix);
 		JLabel jl;
 		int tempNumber = this.number;
-		for (int i = newLength - digitWidthPix; i >= 0; i -= digitWidthPix) {
+		for (int i = newLength - NumberImage.digitWidthPix; i >= 0; i -= NumberImage.digitWidthPix) {
 			jl = DigitTexture.get(tempNumber % 10).getTexture().getLabel();
 			jl.setLocation(i, 0);
 			this.add(jl);

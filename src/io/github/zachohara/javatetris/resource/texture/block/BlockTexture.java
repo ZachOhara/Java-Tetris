@@ -21,13 +21,13 @@ import io.github.zachohara.javatetris.resource.texture.Texture;
 
 public enum BlockTexture {
 
-	BLUE ("blue.png"),
-	GREEN ("green.png"),
-	ORANGE ("orange.png"),
-	PINK ("pink.png"),
-	PURPLE ("purple.png"),
-	RED ("red.png"),
-	YELLOW ("yellow.png");
+	BLUE("blue.png"),
+	GREEN("green.png"),
+	ORANGE("orange.png"),
+	PINK("pink.png"),
+	PURPLE("purple.png"),
+	RED("red.png"),
+	YELLOW("yellow.png");
 
 	private Texture texture;
 

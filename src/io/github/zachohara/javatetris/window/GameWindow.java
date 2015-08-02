@@ -16,7 +16,6 @@
 
 package io.github.zachohara.javatetris.window;
 
-import io.github.zachohara.javatetris.window.GameWindow;
 import io.github.zachohara.javatetris.input.KeyboardInputManager;
 import io.github.zachohara.javatetris.management.GameManager;
 import io.github.zachohara.javatetris.management.LevelManager;
@@ -40,9 +39,9 @@ public class GameWindow extends JFrame {
 	private static final long serialVersionUID = 1L;
 
 	public GameWindow() {
-		super(windowTitle);
+		super(GameWindow.windowTitle);
 
-		this.setSize(getWindowSize());
+		this.setSize(GameWindow.getWindowSize());
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setLocationRelativeTo(null);
 		this.setResizable(false);
@@ -70,8 +69,9 @@ public class GameWindow extends JFrame {
 	}
 
 	private static Dimension getWindowSize() {
-		return new Dimension(1000,900);
-		//TODO: calculate size needs based on the size needs of the constituent window elements
+		return new Dimension(1000, 900);
+		// TODO: calculate size needs based on the size needs of the constituent window
+		// elements
 	}
 
 	public void doInput(int code) {

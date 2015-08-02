@@ -73,39 +73,46 @@ public class KeyboardInputManager implements KeyListener, GameController {
 	@Override
 	public void keyPressed(KeyEvent e) {
 		int code = e.getKeyCode();
-		if (displayOutputs)
+		if (KeyboardInputManager.displayOutputs) {
 			System.out.println(code);
+		}
 
 		if (this.hasControl && this.game.isRunning()) {
 			// left
-			if (Arrays.asList(inputLeft).contains(code))
-				this.game.getBlockGrid().shiftShape(-1); 
+			if (Arrays.asList(KeyboardInputManager.inputLeft).contains(code)) {
+				this.game.getBlockGrid().shiftShape( -1);
+			}
 			// right
-			if (Arrays.asList(inputRight).contains(code))
+			if (Arrays.asList(KeyboardInputManager.inputRight).contains(code)) {
 				this.game.getBlockGrid().shiftShape(1);
+			}
 			// down
-			if (Arrays.asList(inputDown).contains(code)) {
+			if (Arrays.asList(KeyboardInputManager.inputDown).contains(code)) {
 				this.time.setFastMode(true);
 				this.time.interrupt();
 			}
 			// up
-			if (Arrays.asList(inputUp).contains(code))
+			if (Arrays.asList(KeyboardInputManager.inputUp).contains(code)) {
 				this.game.getBlockGrid().hardDrop();
+			}
 			// rotate clockwise
-			if (Arrays.asList(inputRotateCW).contains(code))
+			if (Arrays.asList(KeyboardInputManager.inputRotateCW).contains(code)) {
 				this.game.getBlockGrid().rotateShape(1);
+			}
 			// rotate counterclockwise
-			if (Arrays.asList(inputRotateCCW).contains(code))
-				this.game.getBlockGrid().rotateShape(-1);
+			if (Arrays.asList(KeyboardInputManager.inputRotateCCW).contains(code)) {
+				this.game.getBlockGrid().rotateShape( -1);
+			}
 		}
 		// load plugin
-		if (Arrays.asList(loadPlugin).contains(code)) {
+		if (Arrays.asList(KeyboardInputManager.loadPlugin).contains(code)) {
 			this.game.setPaused(true);
 			JavaPlugin plugin = PluginLoader.handleLoadPlugin();
-			if (plugin != null)
+			if (plugin != null) {
 				this.game.setController(plugin);
-			else
+			} else {
 				this.game.setController(this);
+			}
 			this.game.setPaused(false);
 		}
 	}
@@ -114,9 +121,11 @@ public class KeyboardInputManager implements KeyListener, GameController {
 	public void keyReleased(KeyEvent e) {
 		int code = e.getKeyCode();
 
-		if (this.hasControl)
-			if (Arrays.asList(inputDown).contains(code))
+		if (this.hasControl) {
+			if (Arrays.asList(KeyboardInputManager.inputDown).contains(code)) {
 				this.time.setFastMode(false);
+			}
+		}
 	}
 
 	@Override

@@ -16,7 +16,6 @@
 
 package io.github.zachohara.javatetris.window;
 
-import io.github.zachohara.javatetris.window.TitleImage;
 import io.github.zachohara.javatetris.resource.texture.letter.LetterTexture;
 
 import javax.swing.JFrame;
@@ -44,11 +43,11 @@ public class TitleImage extends JPanel {
 	}
 
 	public static int getLetterwidthpix() {
-		return letterWidthPix;
+		return TitleImage.letterWidthPix;
 	}
 
 	public static int getLetterheightpix() {
-		return letterHeightPix;
+		return TitleImage.letterHeightPix;
 	}
 
 	public String getWord() {
@@ -62,12 +61,12 @@ public class TitleImage extends JPanel {
 
 	private void update() {
 		this.removeAll();
-		this.setSize(letterWidthPix * this.word.length(), letterHeightPix);
+		this.setSize(TitleImage.letterWidthPix * this.word.length(), TitleImage.letterHeightPix);
 		JLabel jl;
 		char[] letters = this.word.toCharArray();
 		for (int i = 0; i < letters.length; i++) {
 			jl = LetterTexture.get(letters[i]).getTexture().getLabel();
-			jl.setLocation(i * letterWidthPix, 0);
+			jl.setLocation(i * TitleImage.letterWidthPix, 0);
 			this.add(jl);
 		}
 		this.revalidate();
@@ -79,7 +78,7 @@ public class TitleImage extends JPanel {
 		f.setLayout(null);
 		f.setSize(800, 200);
 		TitleImage ti = new TitleImage("hello");
-		ti.setLocation(0,0);
+		ti.setLocation(0, 0);
 
 		f.add(ti);
 		f.setVisible(true);

@@ -16,9 +16,9 @@
 
 package io.github.zachohara.javatetris.game;
 
-import java.awt.Point;
-
 import io.github.zachohara.javatetris.resource.texture.block.BlockTexture;
+
+import java.awt.Point;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -34,10 +34,10 @@ public class Block extends JPanel {
 	public Block(BlockTexture texture) {
 		super();
 		this.texture = texture;
-		this.setSize(lengthPixels, lengthPixels);
+		this.setSize(Block.lengthPixels, Block.lengthPixels);
 		JLabel textureLabel = this.texture.getTexture().getLabel();
 		textureLabel.setLocation(0, 0);
-		textureLabel.setSize(lengthPixels, lengthPixels);
+		textureLabel.setSize(Block.lengthPixels, Block.lengthPixels);
 		this.setLayout(null);
 		this.add(textureLabel);
 	}
@@ -47,24 +47,25 @@ public class Block extends JPanel {
 	}
 
 	public static int getLength() {
-		return lengthPixels;
+		return Block.lengthPixels;
 	}
 
 	public static void setLength(int length) {
-		lengthPixels = length;
+		Block.lengthPixels = length;
 	}
 
 	public void setGridPos(int x, int y) {
-		this.setLocation(x * lengthPixels, y * lengthPixels);
+		this.setLocation(x * Block.lengthPixels, y * Block.lengthPixels);
 	}
 
 	public void translate(int dx, int dy) {
 		Point p = this.getLocation();
-		p.x += dx * lengthPixels;
-		p.y += dy * lengthPixels;
+		p.x += dx * Block.lengthPixels;
+		p.y += dy * Block.lengthPixels;
 		this.setLocation(p);
 	}
 
+	@Override
 	public String toString() {
 		return this.texture.toString();
 	}

@@ -44,7 +44,7 @@ public class ScoreManager extends JPanel {
 		super();
 
 		this.setLayout(null);
-		this.setLocation(xPos, yPos);
+		this.setLocation(ScoreManager.xPos, ScoreManager.yPos);
 
 		this.masterWindow = window;
 		this.scoreTitle = new TitleImage("score");
@@ -56,7 +56,7 @@ public class ScoreManager extends JPanel {
 
 		int height = 0;
 		int width = 0;
-		Dimension d; //temporary only
+		Dimension d; // temporary only
 
 		this.scoreTitle.setLocation(0, height);
 		this.add(this.scoreTitle);

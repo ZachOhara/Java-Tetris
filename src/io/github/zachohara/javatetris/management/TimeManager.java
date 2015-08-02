@@ -16,8 +16,6 @@
 
 package io.github.zachohara.javatetris.management;
 
-import io.github.zachohara.javatetris.management.GameManager;
-import io.github.zachohara.javatetris.management.LevelManager;
 
 public class TimeManager extends Thread {
 
@@ -25,7 +23,7 @@ public class TimeManager extends Thread {
 	private GameManager game;
 	private boolean isFastMode;
 
-	private static final double fastFactor = 0.1 ;
+	private static final double fastFactor = 0.1;
 
 	public TimeManager(LevelManager level, GameManager game) {
 		super();
@@ -36,16 +34,18 @@ public class TimeManager extends Thread {
 
 	@Override
 	public void run() {
-		while(!this.isInterrupted()) {
+		while ( !this.isInterrupted()) {
 			int time = 0;
 			try {
-				if (this.isFastMode())
-					time = (int)(level.getDropTicks() * fastFactor);
-				else
-					time = level.getDropTicks();
+				if (this.isFastMode()) {
+					time = (int) (this.level.getDropTicks() * TimeManager.fastFactor);
+				} else {
+					time = this.level.getDropTicks();
+				}
 				Thread.sleep(time);
-			} catch (InterruptedException expected) {}
-			game.doGravity();
+			} catch (InterruptedException expected) {
+			}
+			this.game.doGravity();
 		}
 	}
 

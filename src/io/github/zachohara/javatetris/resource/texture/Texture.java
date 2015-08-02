@@ -39,7 +39,7 @@ public class Texture {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		this.texture = scale(temp, width, height);
+		this.texture = Texture.scale(temp, width, height);
 	}
 
 	public ImageIcon getImage() {
@@ -62,6 +62,7 @@ public class Texture {
 		return db;
 	}
 
+	@Override
 	public String toString() {
 		return this.filename.substring(0, this.filename.length() - 4);
 	}

@@ -16,8 +16,6 @@
 
 package io.github.zachohara.javatetris.management;
 
-import io.github.zachohara.javatetris.management.LevelManager;
-import io.github.zachohara.javatetris.management.ScoreManager;
 import io.github.zachohara.javatetris.game.BlockGrid;
 import io.github.zachohara.javatetris.game.ShapeFactory;
 import io.github.zachohara.javatetris.input.GameController;
@@ -68,8 +66,9 @@ public class GameManager {
 
 	public void setController(GameController gc) {
 		if (gc != null) {
-			if (this.currentController != null)
+			if (this.currentController != null) {
 				this.currentController.setControl(false);
+			}
 			this.currentController = gc;
 			this.currentController.setGame(this);
 			this.currentController.setControl(true);
@@ -91,7 +90,7 @@ public class GameManager {
 			this.gameGrid.anchorShape();
 			this.checkLinesCleared();
 			this.spawnNewShape();
-			if (!this.gameGrid.isShapeViable()) {
+			if ( !this.gameGrid.isShapeViable()) {
 				System.out.println("GAME OVER");
 				this.isRunning = false;
 				this.masterWindow.endGame();
@@ -110,10 +109,11 @@ public class GameManager {
 
 	private void spawnNewShape() {
 		this.nextShapePanel.removeAll();
-		if (!this.nextShapePanel.shapeIsNull())
+		if ( !this.nextShapePanel.shapeIsNull()) {
 			this.gameGrid.setShape(this.nextShapePanel.retrieve());
-		else
+		} else {
 			this.gameGrid.setShape(ShapeFactory.makeRandomShape());
+		}
 		this.nextShapePanel.store(ShapeFactory.makeRandomShape());
 	}
 

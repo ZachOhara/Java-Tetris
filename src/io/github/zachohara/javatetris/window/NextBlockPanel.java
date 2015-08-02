@@ -34,8 +34,8 @@ public class NextBlockPanel extends JPanel {
 	public NextBlockPanel(JFrame window) {
 		super();
 		this.setLayout(null);
-		this.setLocation(xPos, yPos);
-		this.setSize(getLength(), getLength());
+		this.setLocation(NextBlockPanel.xPos, NextBlockPanel.yPos);
+		this.setSize(NextBlockPanel.getLength(), NextBlockPanel.getLength());
 		window.add(this);
 	}
 
@@ -54,7 +54,7 @@ public class NextBlockPanel extends JPanel {
 
 	public void store(Shape nextShape) {
 		this.nextShape = nextShape;
-		this.nextShape.translate(-3, 0);
+		this.nextShape.translate( -3, 0);
 		this.nextShape.setPanel(this);
 		this.update();
 	}
