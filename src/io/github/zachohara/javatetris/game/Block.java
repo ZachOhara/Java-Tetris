@@ -55,7 +55,7 @@ public class Block extends JPanel {
 	}
 
 	public void setGridPos(int x, int y) {
-		this.setLocation(x * Block.lengthPixels, y * Block.lengthPixels);
+		this.setLocation((x + 1) * Block.lengthPixels, (y + 1) * Block.lengthPixels);
 	}
 
 	public void translate(int dx, int dy) {

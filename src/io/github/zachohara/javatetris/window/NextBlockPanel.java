@@ -26,7 +26,7 @@ public class NextBlockPanel extends JPanel {
 
 	private Shape nextShape = null;
 
-	private static final int xPos = 650;
+	private static final int xPos = 700;
 	private static final int yPos = 650;
 
 	private static final long serialVersionUID = 1L;
@@ -54,7 +54,7 @@ public class NextBlockPanel extends JPanel {
 
 	public void store(Shape nextShape) {
 		this.nextShape = nextShape;
-		this.nextShape.translate( -3, 0);
+		this.nextShape.translate(-3, 0);
 		this.nextShape.setPanel(this);
 		this.update();
 	}
@@ -69,7 +69,7 @@ public class NextBlockPanel extends JPanel {
 	}
 
 	public static int getLength() {
-		return Block.getLength() * 4;
+		return Block.getLength() * 5;
 	}
 
 }

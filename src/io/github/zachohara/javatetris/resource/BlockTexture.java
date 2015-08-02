@@ -26,7 +26,8 @@ public enum BlockTexture {
 	PINK,
 	PURPLE,
 	RED,
-	YELLOW;
+	YELLOW,
+	BRICK;
 
 	private Texture texture;
 	

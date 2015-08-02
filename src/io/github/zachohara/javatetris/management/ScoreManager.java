@@ -35,7 +35,7 @@ public class ScoreManager extends JPanel {
 	private NumberImage linesCounter;
 	private NumberImage levelCounter;
 
-	private static final int xPos = 525;
+	private static final int xPos = 615;
 	private static final int yPos = 0;
 
 	private static final long serialVersionUID = 1L;

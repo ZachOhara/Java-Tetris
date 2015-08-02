@@ -25,7 +25,7 @@ public class Shape {
 	private int xPos; // position of upper-left corner in the grid
 	private int yPos;
 	private int rotation; // the current rotation of the shape
-	private int rotatability; // the possible rotations of the shape
+	private final int rotatability; // the possible rotations of the shape
 	private int xCenter; // the center point of rotatation
 	private int yCenter;
 	private Block[][] blocks; // the actual matrix of blocks in this shape; always 4x4

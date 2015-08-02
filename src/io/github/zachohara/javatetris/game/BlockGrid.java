@@ -16,6 +16,8 @@
 
 package io.github.zachohara.javatetris.game;
 
+import io.github.zachohara.javatetris.resource.BlockTexture;
+
 import java.awt.Dimension;
 import java.util.LinkedList;
 
@@ -40,6 +42,7 @@ public class BlockGrid extends JPanel {
 		this.setSize(BlockGrid.getStaticSize());
 		this.setLocation(BlockGrid.xPos, BlockGrid.yPos);
 		this.setLayout(null);
+		this.initializeBrickBorder();
 		window.add(this);
 	}
 
@@ -227,11 +230,36 @@ public class BlockGrid extends JPanel {
 	}
 
 	public static int getStaticWidth() {
-		return Block.getLength() * BlockGrid.gridWidth;
+		return Block.getLength() * (2 + BlockGrid.gridWidth);
 	}
 
 	public static int getStaticHeight() {
-		return Block.getLength() * BlockGrid.gridHeight;
+		return Block.getLength() * (2 + BlockGrid.gridHeight);
+	}
+	
+	private void initializeBrickBorder() {
+		// Top row
+		for (int i = -1; i <= BlockGrid.gridWidth; i++) {
+			this.addBrick(i, -1);
+		}
+		// Right side
+		for (int i = -1; i <= BlockGrid.gridHeight; i++) {
+			this.addBrick(BlockGrid.gridWidth, i);
+		}
+		// Bottom row
+		for (int i = -1; i <= BlockGrid.gridWidth; i++) {
+			this.addBrick(i, BlockGrid.gridHeight);
+		}
+		// Right side
+		for (int i = -1; i <= BlockGrid.gridHeight; i++) {
+			this.addBrick(-1, i);
+		}
+	}
+	
+	private void addBrick(int x, int y) {
+		Block b = new Block(BlockTexture.BRICK);
+		b.setGridPos(x, y);
+		this.add(b);
 	}
 
 }

@@ -69,7 +69,7 @@ public class GameWindow extends JFrame {
 	}
 
 	private static Dimension getWindowSize() {
-		return new Dimension(1000, 900);
+		return new Dimension(975, 978);
 		// TODO: calculate size needs based on the size needs of the constituent window
 		// elements
 	}
