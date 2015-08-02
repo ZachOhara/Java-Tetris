@@ -16,7 +16,7 @@
 
 package io.github.zachohara.javatetris.score;
 
-import io.github.zachohara.javatetris.resource.texture.digit.DigitTexture;
+import io.github.zachohara.javatetris.resource.DigitTexture;
 
 import java.awt.Color;
 

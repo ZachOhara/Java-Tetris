@@ -16,7 +16,7 @@
 
 package io.github.zachohara.javatetris.window;
 
-import io.github.zachohara.javatetris.resource.texture.letter.LetterTexture;
+import io.github.zachohara.javatetris.resource.LetterTexture;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
