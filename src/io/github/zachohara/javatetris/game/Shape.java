@@ -16,7 +16,7 @@
 
 package io.github.zachohara.javatetris.game;
 
-import io.github.zachohara.javatetris.resource.texture.block.BlockTexture;
+import io.github.zachohara.javatetris.resource.BlockTexture;
 
 import javax.swing.JPanel;
 

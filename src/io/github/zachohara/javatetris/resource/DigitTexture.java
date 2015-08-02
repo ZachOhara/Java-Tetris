@@ -14,29 +14,43 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package io.github.zachohara.javatetris.resource.texture.block;
+package io.github.zachohara.javatetris.resource;
 
-import io.github.zachohara.javatetris.game.Block;
-import io.github.zachohara.javatetris.resource.texture.Texture;
+import io.github.zachohara.javatetris.score.NumberImage;
 
-public enum BlockTexture {
+public enum DigitTexture {
 
-	BLUE("blue.png"),
-	GREEN("green.png"),
-	ORANGE("orange.png"),
-	PINK("pink.png"),
-	PURPLE("purple.png"),
-	RED("red.png"),
-	YELLOW("yellow.png");
+	D0,
+	D1,
+	D2,
+	D3,
+	D4,
+	D5,
+	D6,
+	D7,
+	D8,
+	D9;
 
 	private Texture texture;
-
-	private BlockTexture(String filename) {
-		this.texture = new Texture(filename, Block.getLength(), Block.getLength(), this.getClass());
+	
+	private static final String DIGIT_TEXTURE_FOLDER = "digit";
+	
+	@SuppressWarnings("deprecation")
+	private DigitTexture() {
+		this.texture = new Texture(DIGIT_TEXTURE_FOLDER, this.getName(), NumberImage.getDigitWidthPix(), NumberImage.getDigitHeightPix());
 	}
 
 	public Texture getTexture() {
 		return this.texture;
+	}
+
+	public static DigitTexture get(int i) {
+		String digitName = "D" + i;
+		return Enum.valueOf(DigitTexture.class, digitName);
+	}
+	
+	public String getName() {
+		return this.name().substring(1);
 	}
 
 }
