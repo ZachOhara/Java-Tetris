@@ -19,6 +19,7 @@ package io.github.zachohara.javatetris.resource;
 import io.github.zachohara.javatetris.score.NumberImage;
 
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
@@ -60,6 +61,10 @@ public class Texture extends Resource {
 	
 	public Texture(String folder, String filename) {
 		this(folder, filename, DEFAULT_FILETYPE);
+	}
+	
+	public Image getRawImage() {
+		return this.image;
 	}
 
 	public ImageIcon getImage() {

@@ -21,6 +21,7 @@ import io.github.zachohara.javatetris.management.GameManager;
 import io.github.zachohara.javatetris.management.LevelManager;
 import io.github.zachohara.javatetris.management.ScoreManager;
 import io.github.zachohara.javatetris.management.TimeManager;
+import io.github.zachohara.javatetris.resource.Texture;
 
 import java.awt.Dimension;
 
@@ -35,6 +36,7 @@ public class GameWindow extends JFrame {
 	private NextBlockPanel nextShapePanel;
 
 	private static final String windowTitle = "Tetris by Zach Ohara";
+	private static final String ICON_NAME = "mosaic";
 
 	private static final long serialVersionUID = 1L;
 
@@ -46,6 +48,7 @@ public class GameWindow extends JFrame {
 		this.setLocationRelativeTo(null);
 		this.setResizable(false);
 		this.setLayout(null);
+		this.initializeIcon();
 
 		this.level = new LevelManager();
 		this.score = new ScoreManager(this);
@@ -76,6 +79,11 @@ public class GameWindow extends JFrame {
 
 	public void doInput(int code) {
 		// do nothing, for now
+	}
+	
+	private void initializeIcon() {
+		Texture icon = new Texture("icon", ICON_NAME);
+		this.setIconImage(icon.getRawImage());
 	}
 
 	public static void main(String[] args) {
