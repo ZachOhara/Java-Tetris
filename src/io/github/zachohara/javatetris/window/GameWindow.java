@@ -1,6 +1,4 @@
-/* GameWindow.java | The top level window for the program, and the
- * main launcher for the game.
- * Copyright (C) 2015 Zach Ohara
+/* Copyright (C) 2015 Zach Ohara
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by

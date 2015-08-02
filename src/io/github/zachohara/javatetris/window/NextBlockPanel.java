@@ -1,6 +1,4 @@
-/* NextBlockPanel.java | A JPanel to show the next upcoming block next
- * to the main play area.
- * Copyright (C) 2015 Zach Ohara
+/* Copyright (C) 2015 Zach Ohara
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by

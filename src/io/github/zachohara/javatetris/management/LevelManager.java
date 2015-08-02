@@ -1,6 +1,4 @@
-/* LevelManager.java | Responsible for keepint track of the player's
- * level, and for updating the display to reflect the level.
- * Copyright (C) 2015 Zach Ohara
+/* Copyright (C) 2015 Zach Ohara
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by

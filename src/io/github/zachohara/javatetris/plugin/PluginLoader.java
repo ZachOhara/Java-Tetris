@@ -1,5 +1,4 @@
-/* PluginLoader.java | Contains static methods for loading game plugins.
- * Copyright (C) 2015 Zach Ohara
+/* Copyright (C) 2015 Zach Ohara
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by

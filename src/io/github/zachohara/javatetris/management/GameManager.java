@@ -1,6 +1,4 @@
-/* GameManager.java | Responsible for managing the whole game, mostly by
- * creating and exchanging information between sub-managers.
- * Copyright (C) 2015 Zach Ohara
+/* Copyright (C) 2015 Zach Ohara
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by

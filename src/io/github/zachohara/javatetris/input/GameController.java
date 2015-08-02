@@ -1,7 +1,4 @@
-/* GameController.java | An interface for any other classes that intend
- * to be main controller for the game. This includes a human input
- * manager, or any tetris-playing robots.
- * Copyright (C) 2015 Zach Ohara
+/* Copyright (C) 2015 Zach Ohara
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
