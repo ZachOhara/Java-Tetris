@@ -5,7 +5,7 @@
 * Add support for window resizing
 * Add a better-looking scoring system
 * Make an actual font, and get rid of all the PNG's
-* Add a border around the game area
+* ~~Add a border around the game area~~
 * Add a "game over" message
 * Rewrite the plugin system
 * Rewrite the scoreboard system
